@@ -37,6 +37,7 @@ const router = createBrowserRouter(
       <Route path="/Planner" element={<Planner />} />
       <Route path="/Profile" element={<Profile />} />
       <Route path="/Settings" element={<Settings />} />
+      
     </Route>
   )
 );
