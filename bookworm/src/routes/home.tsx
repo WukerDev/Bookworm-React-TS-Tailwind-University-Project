@@ -49,11 +49,11 @@ export default function Home() {
 
 
 
-<div className="bg-white rounded-xl flex flex-start max-h-40 max-w-xl">
-  <img src="https://www.gl-assessment.co.uk/media/1438/ngrt.png?format=*" className="w-1/3 h-full"/>
-  <div className="w-2/3">
-    <p className="text-black">TEST</p>
-    <p className="text-black">TEST</p>
+<div className="bg-white rounded-xl flex flex-start max-h-40 max-w-md">
+  <img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" className="w-1/5 h-full rounded-xl"/>
+  <div className="w-4/5">
+    <p className="text-black">Wiktor Kozakowski</p>
+    <p className="text-black">Moja książka</p>
     <p className="text-black">TEST</p>
     <p className="text-black">TEST</p>
     <p className="text-black">TEST</p>
