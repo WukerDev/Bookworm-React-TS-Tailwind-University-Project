@@ -59,5 +59,55 @@ let Books = [
         "status": "Odrzucone",
         "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
     },
+    {
+        "id": 7,
+        "autor": "Jane Austen",
+        "tytul": "Pride and Prejudice",
+        "rating": 4,
+        "strony": 432,
+        "strona": 200,
+        "status": "Planowane",
+        "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
+      },
+      {
+        "id": 8,
+        "autor": "Gabriel Garcia Marquez",
+        "tytul": "One Hundred Years of Solitude",
+        "rating": 5,
+        "strony": 417,
+        "strona": 50,
+        "status": "Odrzucone",
+        "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
+      },
+      {
+        "id": 9,
+        "autor": "Ernest Hemingway",
+        "tytul": "The Old Man and the Sea",
+        "rating": 4,
+        "strony": 127,
+        "strona": 70,
+        "status": "Planowane",
+        "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
+      },
+      {
+        "id": 10,
+        "autor": "J.K. Rowling",
+        "tytul": "Harry Potter and the Philosopher's Stone",
+        "rating": 5,
+        "strony": 223,
+        "strona": 223,
+        "status": "Planowane",
+        "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
+      },
+      {
+        "id": 11,
+        "autor": "Leo Tolstoy",
+        "tytul": "War and Peace",
+        "rating": 4,
+        "strony": 1440,
+        "strona": 700,
+        "status": "Odrzucone",
+        "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
+      },      
 ]
 export default Books
