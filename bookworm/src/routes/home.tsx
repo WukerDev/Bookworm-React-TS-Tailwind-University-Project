@@ -49,8 +49,9 @@ export default function Home() {
 
 
 
-<div className="bg-white rounded-xl flex flex-start max-h-40 max-w-md">
-  <img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" className="w-1/5 h-full rounded-xl"/>
+<div id="content" className="flex flex-wrap justify-start">
+<div className="bg-white rounded-xl flex flex-start max-h-40 max-w-sm my-1 mx-1">
+  <img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" className="w-4/12 h-30 rounded-xl"/>
   <div className="w-4/5">
     <p className="text-black">Wiktor Kozakowski</p>
     <p className="text-black">Moja książka</p>
@@ -59,7 +60,17 @@ export default function Home() {
     <p className="text-black">Status</p>
   </div>
 </div>
-
+<div className="bg-white rounded-xl flex flex-start max-h-40 max-w-sm my-1 mx-1 ">
+  <img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" className="w-4/12 h-30 rounded-xl"/>
+  <div className="w-4/5">
+    <p className="text-black">Wiktor Kozakowski</p>
+    <p className="text-black">Moja książka</p>
+    <p className="text-black">Rating</p>
+    <p className="text-black">Strona</p>
+    <p className="text-black">Status</p>
+  </div>
+</div>
+</div>
 
 
 
