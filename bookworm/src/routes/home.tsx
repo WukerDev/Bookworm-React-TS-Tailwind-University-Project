@@ -54,9 +54,9 @@ export default function Home() {
   <div className="w-4/5">
     <p className="text-black">Wiktor Kozakowski</p>
     <p className="text-black">Moja książka</p>
-    <p className="text-black">TEST</p>
-    <p className="text-black">TEST</p>
-    <p className="text-black">TEST</p>
+    <p className="text-black">Rating</p>
+    <p className="text-black">Strona</p>
+    <p className="text-black">Status</p>
   </div>
 </div>
 
