@@ -6,7 +6,7 @@ function getYear() {
 }
 //styles config
 //footer
-var stylefoot = "bg-blue-900 dark:bg-slate-900 pb-2"
+var stylefoot = "bg-slate-600"
 //ikony div
 var styleIconDiv = "flex gap-2 align-middle justify-center pt-2"
 //ikony
@@ -19,12 +19,13 @@ export default function Footer() {
  //footer body 
 <footer className={stylefoot}>
 {/*div z ikonami, centruje się, tutaj zmieniamy gap między ikonami i padding*/}
-<div className={styleIconDiv} > 
+<div> 
+    {/*className={styleIconDiv}*/}
 {/*Automatic icon generator*/}
 {/*Aby dodać nowe ikony dodaj je w pliku ikony_baza.tsx*/}
-    {IkonyFooter.map((ikona: any) => (
+  {/*  {IkonyFooter.map((ikona: any) => (
         <a key={ikona.id} href={ikona.href} target="_blank" className={styleIcon}>
-            <img className={styleIconColor} src={ikona.icon} /></a>))}</div>
+            <img className={styleIconColor} src={ikona.icon} /></a>))}*/}</div>
 {/*Copyright notice, z automatycznym update roku*/}
-<a className="text-gray-400">©{getYear()} Uniwersytet Kazimierza Wielkiego</a>  
+<a className="text-gray-400">©{getYear()} Wiktor & Sebastian</a>  
 </footer>)}
