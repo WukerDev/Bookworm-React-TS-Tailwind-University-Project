@@ -1,5 +1,3 @@
-import Test from '../Components/Nav/Nav'
-import Footer from '../Components/Footer/Footer'
 import Imiona from '../Components/Books'
 import { useEffect, useState } from 'react'
 import { Outlet, Link } from 'react-router-dom';

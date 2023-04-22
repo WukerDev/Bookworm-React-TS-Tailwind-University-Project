@@ -13,9 +13,6 @@ import Profile from './routes/profile';
 import Settings from './routes/settings';
 
 
-//NAVBAR
-import NavBar from './Components/Nav/Nav'
-import Footer from './Components/Footer/Footer'
 
 //REACT-ROUTER
 import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route } from 'react-router-dom'

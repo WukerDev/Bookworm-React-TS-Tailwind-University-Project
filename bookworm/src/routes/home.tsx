@@ -1,6 +1,41 @@
 import Books from "../Components/Books"
 import { Tabs, Card, Button } from "flowbite-react";
-import useState from "react";
+
+import { useState, useEffect } from 'react';
+import BooksData from '../Components/Books';
+
+interface Book {
+  id: number;
+  imie: string;
+  info: string;
+  wiek: number;
+}
+
+function BookList() {
+  const [books, setBooks] = useState<Book[]>([]);
+
+  useEffect(() => {
+    setBooks(BooksData);
+  }, []);
+
+  return (
+    <div>
+      {books.map(book => (
+        <div className="bg-white rounded-xl flex flex-start max-h-40 max-w-md" key={book.id}>
+          <img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" className="w-1/5 h-full rounded-xl"/>
+          <div className="w-4/5">
+            <p className="text-black">{book.imie}</p>
+            <p className="text-black">{book.info}</p>
+            <p className="text-black">{book.wiek}</p>
+            <p className="text-black">Strona</p>
+            <p className="text-black">Status</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 
 
 
@@ -120,6 +155,7 @@ export default function Home() {
   </div>
 </div>
 </div>
+<BookList/>
 
 
 
