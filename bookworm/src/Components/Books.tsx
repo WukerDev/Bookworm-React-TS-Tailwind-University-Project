@@ -36,7 +36,7 @@ let Books = [
         "rating": 4,
         "strony": 296,
         "strona": 100,
-        "status": "Czytane",
+        "status": "Planowane",
         "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
     },
     {
@@ -56,7 +56,7 @@ let Books = [
         "rating": 5,
         "strony": 152,
         "strona": 75,
-        "status": "Czytane",
+        "status": "Odrzucone",
         "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
     },
 ]

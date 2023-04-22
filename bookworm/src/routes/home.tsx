@@ -1,7 +1,7 @@
 import { Tabs, Card, Button } from "flowbite-react";
 import { useState, useEffect } from 'react';
 import BooksData from '../Components/Books';
-
+import Menu from '../Components/Menu';
 interface Book {
   id: number;
   autor: string;
@@ -67,21 +67,7 @@ export default function Home() {
 
 
 
-<ul className="grid grid-flow-col text-center text-gray-500 bg-white rounded-full">
-  <li>
-  <a href="#page2" className="flex justify-center bg-blue-700 rounded-full shadow text-white py-4">Czytane</a>
-  </li>
-  <li>
-  <a href="#page3" className="flex justify-center py-4">Przeczytane</a>
-  </li>
-  <li>
-    <a href="#page3" className="flex justify-center py-4">Planowane</a>
-  </li>
-  <li>
-    <a href="#page4" className="flex justify-center py-4">Odrzucone</a>
-  </li>
-</ul>
-
+      <Menu />
 
 
 
