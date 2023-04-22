@@ -7,7 +7,7 @@ let Books = [
         "strony": 1178,
         "strona": 347,
         "status": "Czytane",
-        "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
+        "img": "https://m.media-amazon.com/images/I/71jLBXtWJWL._AC_UF1000,1000_QL80_.jpg"
     },
     {
         "id": 2,
@@ -17,7 +17,7 @@ let Books = [
         "strony": 694,
         "strona": 694,
         "status": "Przeczytane",
-        "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
+        "img": "https://m.media-amazon.com/images/I/91dSMhdIzTL._AC_UF1000,1000_QL80_.jpg"
     },
     {
         "id": 3,
@@ -27,7 +27,7 @@ let Books = [
         "strony": 311,
         "strona": 145,
         "status": "Czytane",
-        "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
+        "img": "https://images.booksense.com/images/818/490/9780385490818.jpg"
     },
     {
         "id": 4,
@@ -37,7 +37,7 @@ let Books = [
         "strony": 296,
         "strona": 100,
         "status": "Planowane",
-        "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
+        "img": "https://tajfuny.pl/wp-content/uploads/2021/05/norwegian-wood.jpeg"
     },
     {
         "id": 5,
