@@ -6,7 +6,7 @@ function getYear() {
 }
 //styles config
 //footer
-var stylefoot = "bg-slate-600"
+var stylefoot = ""
 //ikony div
 var styleIconDiv = "flex gap-2 align-middle justify-center pt-2"
 //ikony
@@ -27,5 +27,5 @@ export default function Footer() {
         <a key={ikona.id} href={ikona.href} target="_blank" className={styleIcon}>
             <img className={styleIconColor} src={ikona.icon} /></a>))}*/}</div>
 {/*Copyright notice, z automatycznym update roku*/}
-<a className="text-gray-400">©{getYear()} Wiktor & Sebastian</a>  
+<a className="text-blue-900">©{getYear()} Wiktor & Sebastian</a>  
 </footer>)}

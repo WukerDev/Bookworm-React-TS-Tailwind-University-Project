@@ -3,6 +3,8 @@
     "@types/node": "^18.15.1"
   },
   "dependencies": {
+    "flowbite": "^1.6.5",
+    "flowbite-react": "^0.4.3",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "react-router-dom": "^6.9.0",

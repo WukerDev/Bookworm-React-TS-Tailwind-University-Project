@@ -12,11 +12,7 @@ export default function Root() {
   });
     return (
         <>
-        <div className="flex flex-col justify-between min-h-screen bg-slate-100">
-            <Test />
             <Outlet />
-            <Footer />
-        </div>
         </>
     )
 }
