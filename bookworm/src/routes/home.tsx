@@ -1,42 +1,9 @@
 import { Tabs, Card, Button } from "flowbite-react";
 import { useState, useEffect } from 'react';
-import BooksData from '../Components/Books';
-import Menu from '../Components/Menu';
-interface Book {
-  id: number;
-  autor: string;
-  rating: number;
-  tytul: string;
-  strony: number;
-  strona: number;
-  status: string;
-  img: string;
-}
 
-function BookList() {
-  const [books, setBooks] = useState<Book[]>([]);
+import BookList from '../Components/Menu';
+import selectedItem from '../Components/Menu';
 
-  useEffect(() => {
-    setBooks(BooksData);
-  }, []);
-
-  return (
-    <div id="content" className="flex flex-wrap justify-center">
-      {books.map(book => (
-        <div className="bg-white rounded-xl w-80 flex flex-start my-1 mx-1 " key={book.id}>
-          <img src={book.img} className="w-28 rounded-xl"/>
-          <div className="w-4/5">
-            <p className="text-black">{book.autor}</p>
-            <p className="text-black">{book.tytul}</p>
-            <p className="text-black">Strona: {book.strona} / {book.strony}</p>
-            <p className="text-black">Status: {book.status}</p>
-            <p className="text-black">Ocena: {book.rating}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
 
 
 
@@ -63,15 +30,6 @@ export default function Home() {
         <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Szukaj</button>
     </div>
 </form>
-
-
-
-
-      <Menu />
-
-
-
-
 <BookList/>
 
 

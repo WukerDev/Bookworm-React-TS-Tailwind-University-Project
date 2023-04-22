@@ -1,13 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import BooksData from '../Components/Books';
 
-const Menu = () => {
+const BookList = () => {
   const [selectedItem, setSelectedItem] = useState(0); // State to keep track of the selected item
 
   const handleItemClick = (index: number) => {
     setSelectedItem(index);
+    if (index === 0) {
+      const filteredBooks = BooksData.filter(book => book.status === "Czytane");
+      setBooks(filteredBooks);
+    } else if (index === 1) {
+      const filteredBooks = BooksData.filter(book => book.status === "Przeczytane");
+      setBooks(filteredBooks);
+    } else if (index === 2) {
+      const filteredBooks = BooksData.filter(book => book.status === "Planowane");
+      setBooks(filteredBooks);
+    } else if (index === 3) {
+      const filteredBooks = BooksData.filter(book => book.status === "Odrzucone");
+      setBooks(filteredBooks);
+    }
   };
-
+  interface Book {
+    id: number;
+    autor: string;
+    rating: number;
+    tytul: string;
+    strony: number;
+    strona: number;
+    status: string;
+    img: string;
+  }
+    const [books, setBooks] = useState<Book[]>([]);
+  
+    useEffect(() => {
+      const filteredBooks = BooksData.filter(book => book.status === "Czytane");;
+      setBooks(filteredBooks);
+    }, []);
+  
   return (
+    <div>
     <ul className="grid grid-flow-col text-center text-gray-500 bg-white rounded-full">
       <li>
         <a
@@ -16,7 +47,7 @@ const Menu = () => {
             selectedItem === 0 && "bg-blue-700  rounded-full text-white" // Add a different style for the selected item
           }`}
           onClick={() => handleItemClick(0)} // Handle click event to update selected item
-        >
+        >            
           Czytane
         </a>
       </li>
@@ -50,11 +81,32 @@ const Menu = () => {
           }`}
           onClick={() => handleItemClick(3)} // Handle click event to update selected item
         >
+
           Odrzucone
         </a>
       </li>
-    </ul>
+      </ul>
+      <div id="content" className="flex flex-wrap justify-center">
+        {books.map(book =>  (
+          <div className="bg-white rounded-xl w-80 flex flex-start my-1 mx-1 " key={book.id}>
+            <img src={book.img} className="w-28 rounded-xl"/>
+            <div className="w-4/5">
+              <p className="text-black">{book.autor}</p>
+              <p className="text-black">{book.tytul}</p>
+              <p className="text-black">Strona: {book.strona} / {book.strony}</p>
+              <p className="text-black">Status: {book.status}</p>
+              <p className="text-black">Ocena: {book.rating}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 
-export default Menu;
+
+
+
+
+
+export default BookList;
