@@ -16,7 +16,7 @@ const BookList = () => {
       const filteredBooks = BooksData.filter(book => book.status === "Planowane");
       setBooks(filteredBooks);
     } else if (index === 3) {
-      const filteredBooks = BooksData.filter(book => book.status === "Odrzucone");
+      const filteredBooks = BooksData.filter(book => book.status === "Porzucone");
       setBooks(filteredBooks);
     }
   };
@@ -42,7 +42,7 @@ const BookList = () => {
     <ul className="grid grid-flow-col text-center text-gray-500 bg-white rounded-full">
       <li>
         <a
-          href="#page2"
+         
           className={`flex justify-center py-4 ${
             selectedItem === 0 && "bg-blue-700  rounded-full text-white" // Add a different style for the selected item
           }`}
@@ -53,7 +53,7 @@ const BookList = () => {
       </li>
       <li>
         <a
-          href="#page3"
+          
           className={`flex justify-center py-4 ${
             selectedItem === 1 && "bg-blue-700  rounded-full text-white" // Add a different style for the selected item
           }`}
@@ -64,7 +64,7 @@ const BookList = () => {
       </li>
       <li>
         <a
-          href="#page3"
+         
           className={`flex justify-center py-4 ${
             selectedItem === 2 && "bg-blue-700  rounded-full text-white" // Add a different style for the selected item
           }`}
@@ -75,18 +75,17 @@ const BookList = () => {
       </li>
       <li>
         <a
-          href="#page4"
+          
           className={`flex justify-center py-4 ${
             selectedItem === 3 && "bg-blue-700  rounded-full text-white" // Add a different style for the selected item
           }`}
           onClick={() => handleItemClick(3)} // Handle click event to update selected item
         >
-
-          Odrzucone
+        Porzucone
         </a>
       </li>
       </ul>
-      <div id="content" className="flex flex-wrap justify-center">
+      <div id="content" className="flex flex-wrap justify-center pt-1">
         {books.map(book =>  (
           <div className="bg-white rounded-xl w-80 flex flex-start my-1 mx-1 " key={book.id}>
             <img src={book.img} className="w-28 rounded-xl"/>

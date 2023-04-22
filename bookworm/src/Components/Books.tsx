@@ -47,7 +47,7 @@ let Books = [
         "strony": 447,
         "strona": 210,
         "status": "Czytane",
-        "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
+        "img": "https://www.farrells.com.au/wp-content/uploads/2022/11/9781473695498.jpg"
     },
     {
         "id": 6,
@@ -56,8 +56,8 @@ let Books = [
         "rating": 5,
         "strony": 152,
         "strona": 75,
-        "status": "Odrzucone",
-        "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
+        "status": "Porzucone",
+        "img": "https://m.media-amazon.com/images/I/51b6GXNJTlL.jpg"
     },
     {
         "id": 7,
@@ -67,7 +67,7 @@ let Books = [
         "strony": 432,
         "strona": 200,
         "status": "Planowane",
-        "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
+        "img": "https://austenprose.files.wordpress.com/2010/07/pride-and-prejudice-barnes-nobel-2015.jpg"
       },
       {
         "id": 8,
@@ -76,8 +76,8 @@ let Books = [
         "rating": 5,
         "strony": 417,
         "strona": 50,
-        "status": "Odrzucone",
-        "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
+        "status": "Porzucone",
+        "img": "https://m.media-amazon.com/images/I/81MI6+TpYkL.jpg"
       },
       {
         "id": 9,
@@ -87,7 +87,7 @@ let Books = [
         "strony": 127,
         "strona": 70,
         "status": "Planowane",
-        "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
+        "img": "https://m.media-amazon.com/images/I/71Au8SjrwkL._AC_UF1000,1000_QL80_.jpg"
       },
       {
         "id": 10,
@@ -97,7 +97,7 @@ let Books = [
         "strony": 223,
         "strona": 223,
         "status": "Planowane",
-        "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
+        "img": "https://res.cloudinary.com/bloomsbury-atlas/image/upload/w_568,c_scale/jackets/9781408855652.jpg"
       },
       {
         "id": 11,
@@ -106,8 +106,8 @@ let Books = [
         "rating": 4,
         "strony": 1440,
         "strona": 700,
-        "status": "Odrzucone",
-        "img": "https://edit.org/images/cat/book-covers-big-2019101610.jpg"
+        "status": "Porzucone",
+        "img": "https://m.media-amazon.com/images/I/A1aDb5U5myL.jpg"
       },      
 ]
 export default Books
