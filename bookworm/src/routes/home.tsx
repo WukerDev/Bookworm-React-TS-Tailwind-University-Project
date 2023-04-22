@@ -1,14 +1,16 @@
-import Books from "../Components/Books"
 import { Tabs, Card, Button } from "flowbite-react";
-
 import { useState, useEffect } from 'react';
 import BooksData from '../Components/Books';
 
 interface Book {
   id: number;
-  imie: string;
-  info: string;
-  wiek: number;
+  autor: string;
+  rating: number;
+  tytul: string;
+  strony: number;
+  strona: number;
+  status: string;
+  img: string;
 }
 
 function BookList() {
@@ -21,14 +23,14 @@ function BookList() {
   return (
     <div>
       {books.map(book => (
-        <div className="bg-white rounded-xl flex flex-start max-h-40 max-w-md" key={book.id}>
-          <img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" className="w-1/5 h-full rounded-xl"/>
+        <div className="bg-white rounded-xl w-80 flex flex-start my-1 mx-1 " key={book.id}>
+          <img src={book.img} className="w-28 rounded-xl"/>
           <div className="w-4/5">
-            <p className="text-black">{book.imie}</p>
-            <p className="text-black">{book.info}</p>
-            <p className="text-black">{book.wiek}</p>
-            <p className="text-black">Strona</p>
-            <p className="text-black">Status</p>
+            <p className="text-black">{book.autor}</p>
+            <p className="text-black">{book.tytul}</p>
+            <p className="text-black">Strona: {book.strona} / {book.strony}</p>
+            <p className="text-black">Status: {book.status}</p>
+            <p className="text-black">Ocena: {book.rating}</p>
           </div>
         </div>
       ))}
@@ -50,7 +52,7 @@ function BookList() {
 export default function Home() {
   return (
     <>
-    <div className="justify-start h-max px-2 py-2 m-2 flex-col flex bg-slate-200 gap-1">
+    <div className="justify-start h-max min-h-screen px-2 py-2 m-2 flex-col flex bg-slate-200 gap-1">
     <form>   
     <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
     <div className="relative">
@@ -84,78 +86,9 @@ export default function Home() {
 
 
 <div id="content" className="flex flex-wrap justify-center">
-<div className="bg-white rounded-xl flex flex-start max-h-40 max-w-sm my-1 mx-1">
-  <img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" className="w-4/12 h-30 rounded-xl"/>
-  <div className="w-4/5">
-    <p className="text-black">Wiktor Kozakowski</p>
-    <p className="text-black">Moja książka</p>
-    <p className="text-black">Rating</p>
-    <p className="text-black">Strona</p>
-    <p className="text-black">Status</p>
-  </div>
-</div>
-<div className="bg-white rounded-xl flex flex-start max-h-40 max-w-sm my-1 mx-1 ">
-  <img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" className="w-4/12 h-30 rounded-xl"/>
-  <div className="w-4/5">
-    <p className="text-black">Wiktor Kozakowski</p>
-    <p className="text-black">Moja książka</p>
-    <p className="text-black">Rating</p>
-    <p className="text-black">Strona</p>
-    <p className="text-black">Status</p>
-  </div>
-</div>
-<div className="bg-white rounded-xl flex flex-start max-h-40 max-w-sm my-1 mx-1 ">
-  <img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" className="w-4/12 h-30 rounded-xl"/>
-  <div className="w-4/5">
-    <p className="text-black">Wiktor Kozakowski</p>
-    <p className="text-black">Moja książka</p>
-    <p className="text-black">Rating</p>
-    <p className="text-black">Strona</p>
-    <p className="text-black">Status</p>
-  </div>
-</div>
-<div className="bg-white rounded-xl flex flex-start max-h-40 max-w-sm my-1 mx-1 ">
-  <img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" className="w-4/12 h-30 rounded-xl"/>
-  <div className="w-4/5">
-    <p className="text-black">Wiktor Kozakowski</p>
-    <p className="text-black">Moja książka</p>
-    <p className="text-black">Rating</p>
-    <p className="text-black">Strona</p>
-    <p className="text-black">Status</p>
-  </div>
-</div>
-<div className="bg-white rounded-xl flex flex-start max-h-40 max-w-sm my-1 mx-1 ">
-  <img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" className="w-4/12 h-30 rounded-xl"/>
-  <div className="w-4/5">
-    <p className="text-black">Wiktor Kozakowski</p>
-    <p className="text-black">Moja książka</p>
-    <p className="text-black">Rating</p>
-    <p className="text-black">Strona</p>
-    <p className="text-black">Status</p>
-  </div>
-</div>
-<div className="bg-white rounded-xl flex flex-start max-h-40 max-w-sm my-1 mx-1 ">
-  <img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" className="w-4/12 h-30 rounded-xl"/>
-  <div className="w-4/5">
-    <p className="text-black">Wiktor Kozakowski</p>
-    <p className="text-black">Moja książka</p>
-    <p className="text-black">Rating</p>
-    <p className="text-black">Strona</p>
-    <p className="text-black">Status</p>
-  </div>
-</div>
-<div className="bg-white rounded-xl flex flex-start max-h-40 max-w-sm my-1 mx-1 ">
-  <img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" className="w-4/12 h-30 rounded-xl"/>
-  <div className="w-4/5">
-    <p className="text-black">Wiktor Kozakowski</p>
-    <p className="text-black">Moja książka</p>
-    <p className="text-black">Rating</p>
-    <p className="text-black">Strona</p>
-    <p className="text-black">Status</p>
-  </div>
-</div>
-</div>
 <BookList/>
+</div>
+
 
 
 
