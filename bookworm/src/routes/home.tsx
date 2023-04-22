@@ -21,7 +21,7 @@ function BookList() {
   }, []);
 
   return (
-    <div>
+    <div id="content" className="flex flex-wrap justify-center">
       {books.map(book => (
         <div className="bg-white rounded-xl w-80 flex flex-start my-1 mx-1 " key={book.id}>
           <img src={book.img} className="w-28 rounded-xl"/>
@@ -85,10 +85,8 @@ export default function Home() {
 
 
 
-<div id="content" className="flex flex-wrap justify-center">
-<BookList/>
-</div>
 
+<BookList/>
 
 
 
