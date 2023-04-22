@@ -1,5 +1,4 @@
-import Imiona from "../Components/BazaImion"
-
+import Books from "../Components/Books"
 import { Tabs, Card, Button } from "flowbite-react";
 import useState from "react";
 
@@ -16,7 +15,7 @@ import useState from "react";
 export default function Home() {
   return (
     <>
-    <div className="justify-start h-screen px-2 py-2 m-2 flex-col flex bg-slate-200 gap-1">
+    <div className="justify-start h-max px-2 py-2 m-2 flex-col flex bg-slate-200 gap-1">
     <form>   
     <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
     <div className="relative">
