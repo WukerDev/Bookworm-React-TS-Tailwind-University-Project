@@ -27,30 +27,27 @@ export default function Home() {
         <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Szukaj</button>
     </div>
 </form>
-<div className="sm:hidden">
-    <label htmlFor="tabs" className="sr-only">Select your country</label>
-    <select id="tabs" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option>Czytane</option>
-        <option>Planowane</option>
-        <option>Ukończone</option>
-        <option>Przerwane</option>
-        <option>Porzucone</option>
-    </select>
-</div>
-<ul className="hidden text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
-    <li className="w-full">
-        <a href="#" className="inline-block w-full p-4 text-gray-900 bg-gray-100 rounded-l-lg focus:ring-4 focus:ring-blue-300 active focus:outline-none dark:bg-gray-700 dark:text-white" aria-current="page">Profile</a>
-    </li>
-    <li className="w-full">
-        <a href="#" className="inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700">Dashboard</a>
-    </li>
-    <li className="w-full">
-        <a href="#" className="inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700">Settings</a>
-    </li>
-    <li className="w-full">
-        <a href="#" className="inline-block w-full p-4 bg-white rounded-r-lg hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700">Invoice</a>
-    </li>
+
+
+
+
+<ul className="grid grid-flow-col text-center text-gray-500 bg-white rounded-full">
+  <li>
+    <a href="#page1" className="flex justify-center py-4">Czytane</a>
+  </li>
+  <li>
+    <a href="#page2" className="flex justify-center bg-blue-700 rounded-full shadow text-slate-100 py-4">Przeczytane</a>
+  </li>
+  <li>
+    <a href="#page3" className="flex justify-center py-4">Planowane</a>
+  </li>
+  <li>
+    <a href="#page4" className="flex justify-center py-4">Odrzucone</a>
+  </li>
 </ul>
+
+
+
 
 <div className="max-w-sm">
   <Card
