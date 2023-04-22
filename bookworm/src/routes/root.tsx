@@ -8,7 +8,7 @@ export default function Root() {
   const [count, setCount] = useState(0);
   const increment = () => setCount(count + 1);
   useEffect(() => {
-    document.title = `Astral | ${Imiona[0].imie}, ${Imiona[1].imie}, ${Imiona[2].imie}`;
+    document.title = `Bookworm By Wiktor & Sebastian`;
   });
     return (
         <>
