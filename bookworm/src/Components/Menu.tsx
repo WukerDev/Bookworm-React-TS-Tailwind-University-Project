@@ -75,12 +75,12 @@ const BookList = () => {
         </div>
       </form>
     <div>
-    <ul className="grid grid-flow-col text-center text-gray-500 bg-white rounded-full">
+    <ul className="grid grid-flow-col text-center text-gray-500 bg-white rounded-lg  border border-gray-300 ">
       <li>
         <a
          
-          className={`flex justify-center py-4 ${
-            selectedItem === 0 && "bg-blue-700  rounded-full text-white font-bold" // Add a different style for the selected item
+          className={`flex justify-center py-4  ${
+            selectedItem === 0 && "bg-blue-700  rounded-lg text-white font-bold" // Add a different style for the selected item
           }`}
           onClick={() => handleItemClick(0)} // Handle click event to update selected item
         >            
@@ -90,8 +90,8 @@ const BookList = () => {
       <li>
         <a
           
-          className={`flex justify-center py-4 ${
-            selectedItem === 1 && "bg-blue-700  rounded-full text-white font-bold" // Add a different style for the selected item
+          className={`flex justify-center py-4  px-2 ${
+            selectedItem === 1 && "bg-blue-700  rounded-lg text-white font-bold" // Add a different style for the selected item
           }`}
           onClick={() => handleItemClick(1)} // Handle click event to update selected item
         >
@@ -101,8 +101,8 @@ const BookList = () => {
       <li>
         <a
          
-          className={`flex justify-center py-4 ${
-            selectedItem === 2 && "bg-blue-700  rounded-full text-white font-bold" // Add a different style for the selected item
+          className={`flex justify-center py-4  px-2 ${
+            selectedItem === 2 && "bg-blue-700  rounded-lg text-white font-bold" // Add a different style for the selected item
           }`}
           onClick={() => handleItemClick(2)} // Handle click event to update selected item
         >
@@ -112,8 +112,8 @@ const BookList = () => {
       <li>
         <a
           
-          className={`flex justify-center py-4 ${
-            selectedItem === 3 && "bg-blue-700  rounded-full text-white font-bold" // Add a different style for the selected item
+          className={`flex justify-center py-4  px-2 ${
+            selectedItem === 3 && "bg-blue-700  rounded-lg text-white font-bold" // Add a different style for the selected item
           }`}
           onClick={() => handleItemClick(3)} // Handle click event to update selected item
         >
@@ -122,11 +122,11 @@ const BookList = () => {
       </li>
       </ul>
       {buttonClicked && searchResults.length > 0 ? (
-          <div id="content" className="flex flex-wrap justify-center pt-1">
+          <div id="content" className="flex flex-wrap justify-center pt-1 ">
           {searchResults.map(book => (
-            <div className="bg-white rounded-xl w-80 flex flex-start my-1 mx-1 " key={book.id}>
+            <div id="debug" className="bg-white rounded-xl  w-80 flex flex-start my-1 mx-1 border border-gray-300" key={book.id}>
               <img src={book.img} className="w-28 rounded-xl"/>
-              <div className="w-4/5 justify-center flex flex-col py-5">
+              <div className="w-4/5 justify-center flex flex-col py-5 ">
                 <p className="font-light text-slate-500 text-s">{book.autor}</p>
                 <p className="text-black font-black text-lg">{book.tytul}</p>
                 <Pages idbk={book.id} pages={book.strony} currentpages={book.strona}/>
@@ -148,7 +148,7 @@ const BookList = () => {
       ) : (
         <div id="content" className="flex flex-wrap justify-center pt-1">
         {books.map(book =>  (
-          <div className="bg-white rounded-xl w-80 flex flex-start my-1 mx-1 " key={book.id}>
+          <div className="bg-white rounded-xl w-80 flex flex-start my-1 mx-1 border border-gray-300" key={book.id}>
             <img src={book.img} className="w-28 rounded-xl"/>
             <div className="w-4/5 justify-center flex flex-col py-5">
               <p className="font-light text-slate-500 text-s">{book.autor}</p>
