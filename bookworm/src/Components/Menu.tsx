@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import BooksData from '../Components/Books';
-import Stars  from '../Components/Stars';
-import Pages from '../Components/Pages';
+import BooksData from "../Components/Books";
+import Stars from "../Components/Stars";
+import Pages from "../Components/Pages";
 import { Rating } from "flowbite-react";
 
 const BookList = () => {
   const [selectedItem, setSelectedItem] = useState(0); // State to keep track of the selected item
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Book[]>([]);
-  const [buttonClicked, setButtonClicked] = useState<boolean>(false)
+  const [buttonClicked, setButtonClicked] = useState<boolean>(false);
+  const [books, setBooks] = useState<Book[]>([]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -16,34 +17,35 @@ const BookList = () => {
 
   const handleButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const results = BooksData.filter((book) =>
-      book.tytul.toLowerCase().includes(searchTerm.toLowerCase()) || // search by title
-      book.autor.toLowerCase().includes(searchTerm.toLowerCase()) // search by author
+    const results = BooksData.filter(
+      (book) =>
+        book.tytul.toLowerCase().includes(searchTerm.toLowerCase()) || // search by title
+        book.autor.toLowerCase().includes(searchTerm.toLowerCase()) // search by author
     );
     setSearchResults(results);
     setButtonClicked(true);
     setSelectedItem(5);
   };
-  
 
   const handleItemClick = (index: number) => {
     setSelectedItem(index);
     if (index === 0) {
-      const filteredBooks = BooksData.filter(book => book.status === "Czytane");
+      const filteredBooks = BooksData.filter((book) => book.status === "Czytane");
       setBooks(filteredBooks);
     } else if (index === 1) {
-      const filteredBooks = BooksData.filter(book => book.status === "Przeczytane");
+      const filteredBooks = BooksData.filter((book) => book.status === "Przeczytane");
       setBooks(filteredBooks);
     } else if (index === 2) {
-      const filteredBooks = BooksData.filter(book => book.status === "Planowane");
+      const filteredBooks = BooksData.filter((book) => book.status === "Planowane");
       setBooks(filteredBooks);
     } else if (index === 3) {
-      const filteredBooks = BooksData.filter(book => book.status === "Porzucone");
+      const filteredBooks = BooksData.filter((book) => book.status === "Porzucone");
       setBooks(filteredBooks);
     }
     setSearchResults([]);
     setButtonClicked(false);
   };
+
   interface Book {
     id: number;
     autor: string;
@@ -57,12 +59,29 @@ const BookList = () => {
     userRating: number;
   }
 
-    const [books, setBooks] = useState<Book[]>([]);
-  var score;
-    useEffect(() => {
-      const filteredBooks = BooksData.filter(book => book.status === "Czytane");;
-      setBooks(filteredBooks);
-    }, []);
+  useEffect(() => {
+    const filteredBooks = BooksData.filter((book) => book.status === "Czytane");
+    setBooks(filteredBooks);
+  }, []);
+
+  // Function to handle setting and getting cookies
+  const setCookie = (name: string, value: any, days: number) => {
+    const date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    const expires = "; expires=" + date.toUTCString();
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  };
+
+  const getCookie = (name: string) => {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === " ") c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  };
   
   return (
     <>
@@ -129,7 +148,7 @@ const BookList = () => {
           {searchResults.map(book => (
             <div id="debug" className="bg-white rounded-xl  w-80 flex flex-start my-1 mx-1 border border-gray-300 shadow-lg" key={book.id}>
               <img src={book.img} className="w-28 rounded-xl"/>
-              <div className="w-4/5 justify-center flex flex-col py-5 ">
+              <div className="w-4/5 justify-center flex flex-col ">
                 <p className="font-light text-slate-500 text-s">{book.autor}</p>
                 <p className="text-black font-black text-lg">{book.tytul}</p>
                 <Pages idbk={book.id} pages={book.strony} currentpages={book.strona}/>
@@ -143,6 +162,7 @@ const BookList = () => {
                     <Stars idbook={book.id} rating={book.userRating} />
                   </div>
                 </p>
+                <button className="text-yellow-300">Hello</button>
               </div>
             </div>
           ))}
@@ -152,7 +172,7 @@ const BookList = () => {
         {books.map(book =>  (
           <div className="bg-white rounded-xl w-80 flex flex-start my-1 mx-1 border border-gray-300 shadow-lg" key={book.id}>
             <img src={book.img} className="w-28 rounded-xl"/>
-            <div className="w-4/5 justify-center flex flex-col py-5">
+            <div className="w-4/5 justify-center flex flex-col">
               <p className="font-light text-slate-500 text-s">{book.autor}</p>
               <p className="text-black font-black text-lg">{book.tytul}</p>
               <Pages idbk={book.id} pages={book.strony} currentpages={book.strona}/>
