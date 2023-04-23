@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BooksData from '../Components/Books';
 import Stars  from '../Components/Stars';
-
+import Pages from '../Components/Pages';
 const BookList = () => {
   const [selectedItem, setSelectedItem] = useState(0); // State to keep track of the selected item
 
@@ -96,7 +96,7 @@ const BookList = () => {
             <div className="w-4/5 justify-center flex flex-col py-5">
               <p className="font-light text-slate-500 text-s">{book.autor}</p>
               <p className="text-black font-black text-lg">{book.tytul}</p>
-              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{book.strona} / {book.strony}</p>
+              <Pages idbook={book.id} pages={book.strony} currentpages={book.strona}/>
               <div className="flex items-center justify-center">
     <p className="bg-blue-100 text-blue-800 text-sm font-semibold inline-flex items-center p-1.5 rounded dark:bg-blue-200 dark:text-blue-800">{book.rating}</p>
     <span className="w-1 h-1 mx-2 bg-gray-900 rounded-full dark:bg-gray-500"></span>
