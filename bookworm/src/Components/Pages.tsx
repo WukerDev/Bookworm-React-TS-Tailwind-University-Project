@@ -1,8 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Rating } from "flowbite-react";
 import BooksData from '../Components/Books';
 import Minus from './minus.svg';
 import Plus from './plus.svg';
+
+// Function to get the value of a cookie by name
+const getCookie = (name: string) => {
+  const cookies = document.cookie.split(";").map(cookie => cookie.trim());
+  for (const cookie of cookies) {
+    const [cookieName, cookieValue] = cookie.split("=");
+    if (cookieName === name) {
+      return cookieValue;
+    }
+  }
+  return null;
+};
+
+// Function to set the value of a cookie
+const setCookie = (name: string, value: string, days: number) => {
+  const date = new Date();
+  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+  const expires = "expires=" + date.toUTCString();
+  document.cookie = name + "=" + value + ";" + expires + ";path=/";
+};
+
+// Function to delete a cookie by name
+const deleteCookie = (name: string) => {
+  document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+};
 
 interface Props {
   idbk: number;
@@ -13,15 +38,27 @@ interface Props {
 const Pages: React.FC<Props> = ({ idbk, pages, currentpages }) => {
   const [currentPage, setCurrentPage] = useState(currentpages);
 
+  // Load current page value from cookie on component mount
+  useEffect(() => {
+    const storedCurrentPage = getCookie(`currentPage-${idbk}`);
+    if (storedCurrentPage) {
+      setCurrentPage(Number(storedCurrentPage));
+    }
+  }, []);
+
   const handleIncrement = () => {
     if (currentPage < pages) {
-      setCurrentPage(currentPage + 1);
+      const updatedPage = currentPage + 1;
+      setCurrentPage(updatedPage);
+      setCookie(`currentPage-${idbk}`, updatedPage.toString(), 7); // Set cookie for current page
     }
   };
 
   const handleDecrement = () => {
     if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
+      const updatedPage = currentPage - 1;
+      setCurrentPage(updatedPage);
+      setCookie(`currentPage-${idbk}`, updatedPage.toString(), 7); // Set cookie for current page
     }
   };
 
