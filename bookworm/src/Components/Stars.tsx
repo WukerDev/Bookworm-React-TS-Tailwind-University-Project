@@ -31,12 +31,12 @@ const Stars: React.FC<Props> = ({ idbook, rating }) => {
 
   return (
     <React.Fragment>
-      <Rating>
-        <Rating.Star filled={userRating >= 1} onClick={() => handleRatingChange(1)} className="cursor-pointer hover:fill-yellow-500" />
-        <Rating.Star filled={userRating >= 2} onClick={() => handleRatingChange(2)} className="cursor-pointer hover:fill-yellow-500" />
-        <Rating.Star filled={userRating >= 3} onClick={() => handleRatingChange(3)} className="cursor-pointer hover:fill-yellow-500" />
-        <Rating.Star filled={userRating >= 4} onClick={() => handleRatingChange(4)} className="cursor-pointer hover:fill-yellow-500" />
-        <Rating.Star filled={userRating >= 5} onClick={() => handleRatingChange(5)} className="cursor-pointer hover:fill-yellow-500" />
+      <Rating className="pt-1">
+        <Rating.Star filled={userRating >= 1} onClick={() => handleRatingChange(1)} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+        <Rating.Star filled={userRating >= 2} onClick={() => handleRatingChange(2)} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+        <Rating.Star filled={userRating >= 3} onClick={() => handleRatingChange(3)} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+        <Rating.Star filled={userRating >= 4} onClick={() => handleRatingChange(4)} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+        <Rating.Star filled={userRating >= 5} onClick={() => handleRatingChange(5)} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
       </Rating>
     </React.Fragment>
   );
