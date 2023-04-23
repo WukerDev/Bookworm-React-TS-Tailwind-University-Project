@@ -103,8 +103,8 @@ const BookList = () => {
     <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{book.reviews} ocen</p>
 </div>
 <p className="text-sm font-medium text-gray-500 dark:text-gray-400"><div className="flex items-center justify-center">
-  {score = book.userRating}
-<Stars rating={score}/>
+
+<Stars idbook={book.id} rating={book.userRating} />
               </div></p>
             </div>
           </div>

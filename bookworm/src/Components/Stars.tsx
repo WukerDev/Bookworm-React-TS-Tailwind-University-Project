@@ -1,39 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Rating } from "flowbite-react";
+import BooksData from '../Components/Books';
 
 interface Props {
   rating: number;
-}
-var code = (<div></div>);
-var one = false, two = false, three = false, four = false, five = false;
-function clean() {
-    one = false;
-    two = false;
-    three = false;
-    four = false;
-    five = false;
+  idbook: number;
 }
 
-const Stars: React.FC<Props> = ({ rating }) => { 
-    clean()
-    if (rating >= 1) { one = true; }
-    if (rating >= 2) {one = true;  two = true; }
-    if (rating >= 3) {one = true;  two = true; three = true; }
-    if (rating >= 4) { one = true;  two = true; three = true; four = true; }
-    if (rating >= 5) { one = true;  two = true; three = true; four = true; five = true; }
-    code = (
-      <React.Fragment>
-        <Rating>
-          <Rating.Star filled={one} />
-          <Rating.Star filled={two} />
-          <Rating.Star filled={three} />
-          <Rating.Star filled={four} />
-          <Rating.Star filled={five} />
-        </Rating>
-      </React.Fragment>
-    );
-  
-  return (code);
+const Stars: React.FC<Props> = ({ idbook, rating }) => {
+  const [userRating, setUserRating] = useState(rating);
+
+  const handleRatingChange = (newRating: number) => {
+    setUserRating(newRating);
+    // Call the function to update the user rating in the parent component
+    updateBookUserRating(idbook, newRating);
+  };
+
+  const updateBookUserRating = (idbook: number, newRating: number) => {
+    const updatedBooks = BooksData.map(book => {
+      if (book.id === idbook) {
+        return { ...book, userRating: newRating };
+      } else {
+        return book;
+      }
+    });
+    // Update the BooksData with the updatedBooks array
+    // You can set the updatedBooks array in your parent component's state or pass it to any other appropriate function
+    console.log(updatedBooks); // For example, you can log the updatedBooks array to see the changes
+  };
+
+  return (
+    <React.Fragment>
+      <Rating>
+        <Rating.Star filled={userRating >= 1} onClick={() => handleRatingChange(1)} className="cursor-pointer" />
+        <Rating.Star filled={userRating >= 2} onClick={() => handleRatingChange(2)} className="cursor-pointer" />
+        <Rating.Star filled={userRating >= 3} onClick={() => handleRatingChange(3)} className="cursor-pointer" />
+        <Rating.Star filled={userRating >= 4} onClick={() => handleRatingChange(4)} className="cursor-pointer" />
+        <Rating.Star filled={userRating >= 5} onClick={() => handleRatingChange(5)} className="cursor-pointer" />
+      </Rating>
+    </React.Fragment>
+  );
 };
 
 export default Stars;
