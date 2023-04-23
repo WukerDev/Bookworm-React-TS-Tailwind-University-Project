@@ -5,12 +5,12 @@ import Minus from './minus.svg';
 import Plus from './plus.svg';
 
 interface Props {
-  idbook: number;
+  idbk: number;
   pages: number;
   currentpages: number;
 }
 
-const Pages: React.FC<Props> = ({ idbook, pages, currentpages }) => {
+const Pages: React.FC<Props> = ({ idbk, pages, currentpages }) => {
   const [currentPage, setCurrentPage] = useState(currentpages);
 
   const handleIncrement = () => {
