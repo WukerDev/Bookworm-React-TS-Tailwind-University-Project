@@ -15,14 +15,16 @@ const BookList = () => {
   };
 
   const handleButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // prevent form submission
-    const results = BooksData.filter(book =>
-      book.tytul.toLowerCase().includes(searchTerm.toLowerCase())
+    event.preventDefault();
+    const results = BooksData.filter((book) =>
+      book.tytul.toLowerCase().includes(searchTerm.toLowerCase()) || // search by title
+      book.autor.toLowerCase().includes(searchTerm.toLowerCase()) // search by author
     );
     setSearchResults(results);
     setButtonClicked(true);
     setSelectedItem(5);
   };
+  
 
   const handleItemClick = (index: number) => {
     setSelectedItem(index);
