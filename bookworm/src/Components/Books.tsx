@@ -222,7 +222,7 @@ let Books = [
                     "tytul": "The Catcher in the Rye",
                     "rating": 4.6,
                     "reviews": 205,
-                    "userRating": 4,
+                    "userRating": 0,
                     "strony": 224,
                     "strona": 0,
                     "status": "Planowane",
