@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import BooksData from "../Components/Books";
+import Books from "../Components/Books";
 import Stars from "../Components/Stars";
 import Pages from "../Components/Pages";
-import { Rating } from "flowbite-react";
+
+var BooksData = Books;
+var BookCount = BooksData.length;
 
 const BookList = () => {
   const [selectedItem, setSelectedItem] = useState(0); // State to keep track of the selected item
@@ -59,10 +61,37 @@ const BookList = () => {
     userRating: number;
   }
 
+  var newBook: Book = {
+    id: BookCount, // set the id value as needed
+    autor: 'John Doe', // set the autor value as needed
+    rating: 4.5, // set the rating value as needed
+    tytul: 'Example Book', // set the tytul value as needed
+    strony: 300, // set the strony value as needed
+    strona: 100, // set the strona value as needed
+    status: 'Czytane', // set the status value as needed
+    img: 'https://images.pexels.com/photos/1525041/pexels-photo-1525041.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500', // set the img value as needed
+    reviews: 50, // set the reviews value as needed
+    userRating: 3.8 // set the userRating value as needed
+  };
+
+
+  const handleNewBook = () => {
+    // Save the new book to session storage
+    sessionStorage.setItem(`book_${newBook.id}`, JSON.stringify(newBook));
+    setBooks(prevBooks => [...prevBooks, newBook]);
+    BookCount++;
+  
+    // Update the cookie with the latest book count
+    setCookie("bookCount", BookCount.toString(), 7);
+  };
+
+
   useEffect(() => {
-    const filteredBooks = BooksData.filter((book) => book.status === "Czytane");
-    setBooks(filteredBooks);
-  }, []);
+    if (BooksData) { // Add a conditional check to ensure BooksData is not null
+      const filteredBooks = BooksData.filter((book) => book.status === "Czytane");
+      setBooks(filteredBooks);
+    }
+  }, [BooksData]);
 
   // Function to handle setting and getting cookies
   const setCookie = (name: string, value: any, days: number) => {
@@ -71,7 +100,31 @@ const BookList = () => {
     const expires = "; expires=" + date.toUTCString();
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
   };
-
+  useEffect(() => {
+    // Retrieve books from session storage and set state
+    const savedBooks = [];
+    for (let i = 0; i < sessionStorage.length; i++) {
+      const key = sessionStorage.key(i);
+      if (key?.startsWith('book_')) {
+        const item = sessionStorage.getItem(key);
+        if (item !== null) { // Add null check
+          try {
+            // Check if item is a valid JSON string
+            const isJsonString = typeof item === 'string' && item.startsWith('{') && item.endsWith('}');
+            if (isJsonString) {
+              const book = JSON.parse(item);
+              savedBooks.push(book);
+            }
+          } catch (error) {
+            // Handle JSON parsing error, e.g. log or display an error message
+            console.error('Error parsing JSON:', error);
+          }
+        }
+      }
+    }
+    // rest of the code
+  }, []);
+  
   const getCookie = (name: string) => {
     const nameEQ = name + "=";
     const ca = document.cookie.split(";");
@@ -148,7 +201,7 @@ const BookList = () => {
           {searchResults.map(book => (
             <div id="debug" className="bg-white rounded-xl  w-80 flex flex-start my-1 mx-1 border border-gray-300 shadow-lg" key={book.id}>
               <img src={book.img} className="w-28 rounded-xl"/>
-              <div className="w-4/5 justify-center flex flex-col ">
+              <div className="w-4/5 h-44 justify-center flex flex-col ">
                 <p className="font-light text-slate-500 text-s">{book.autor}</p>
                 <p className="text-black font-black text-lg">{book.tytul}</p>
                 <Pages idbk={book.id} pages={book.strony} currentpages={book.strona}/>
@@ -162,7 +215,6 @@ const BookList = () => {
                     <Stars idbook={book.id} rating={book.userRating} />
                   </div>
                 </p>
-                <button className="text-yellow-300">Hello</button>
               </div>
             </div>
           ))}
@@ -172,7 +224,8 @@ const BookList = () => {
         {books.map(book =>  (
           <div className="bg-white rounded-xl w-80 flex flex-start my-1 mx-1 border border-gray-300 shadow-lg" key={book.id}>
             <img src={book.img} className="w-28 rounded-xl"/>
-            <div className="w-4/5 justify-center flex flex-col">
+            <div className="w-4/5 h-44 justify-center flex flex-col">
+            <p className="font-light text-slate-500 text-s">{book.id}</p>
               <p className="font-light text-slate-500 text-s">{book.autor}</p>
               <p className="text-black font-black text-lg">{book.tytul}</p>
               <Pages idbk={book.id} pages={book.strony} currentpages={book.strona}/>
@@ -191,7 +244,7 @@ const BookList = () => {
       </div>
       )}
 </div>
-<button type="submit"  className="text-white fixed bottom-3 right-5  p-0 w-16 h-16 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><svg viewBox="0 0 20 20" enable-background="new 0 0 20 20" className="w-10 h-10 inline-block">
+<button type="submit" onClick={handleNewBook} className="text-white fixed bottom-3 right-5  p-0 w-16 h-16 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><svg viewBox="0 0 20 20" enable-background="new 0 0 20 20" className="w-10 h-10 inline-block">
             <path fill="#FFFFFF" d="M16,10c0,0.553-0.048,1-0.601,1H11v4.399C11,15.951,10.553,16,10,16c-0.553,0-1-0.049-1-0.601V11H4.601
                                     C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399
                                     C15.952,9,16,9.447,16,10z" />
