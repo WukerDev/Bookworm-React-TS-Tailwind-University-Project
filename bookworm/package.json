@@ -9,8 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.16",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.12.1",
     "flowbite": "^1.6.5",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",

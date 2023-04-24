@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import BooksData from "../Components/Books";
 import Stars from "../Components/Stars";
 import Pages from "../Components/Pages";
+import PopupForm from '../Components/Form';
+
 
 
 var BookCount = BooksData.length+1;
@@ -26,7 +28,6 @@ const BookList = () => {
     );
     setSearchResults(results);
     setButtonClicked(true);
-    setSelectedItem(5);
   }
 
 
@@ -153,17 +154,17 @@ const BookList = () => {
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </div>
-          <input type="text" value={searchTerm} onChange={handleInputChange} className="block w-full p-4 pl-10 text-sm text-gray-900 border shadow-lg border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Wyszukaj książkę..." required/>
+          <input type="text" value={searchTerm} onChange={handleInputChange} className="block w-full p-4 pl-10 text-sm text-gray-900 border shadow-lg border-gray-300 rounded-lg  bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Wyszukaj książkę..." required/>
           <button type="submit"  className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Wyszukaj</button>
         </div>
       </form>
     <div>
-    <ul className="grid grid-flow-col text-center text-gray-500 bg-white rounded-lg  border border-gray-300 shadow-lg ">
+    <ul className="grid grid-flow-col text-center text-gray-500  bg-white rounded-lg  border border-gray-300 shadow-lg ">
       <li>
         <a
          
           className={`flex justify-center py-4  ${
-            selectedItem === 0 && "bg-blue-700  rounded-lg text-white font-bold" // Add a different style for the selected item
+            selectedItem === 0 && "bg-blue-700  hover:bg-blue-800 rounded-lg text-white font-bold" // Add a different style for the selected item
           }`}
           onClick={() => handleItemClick(0)} // Handle click event to update selected item
         >            
@@ -174,7 +175,7 @@ const BookList = () => {
         <a
           
           className={`flex justify-center py-4  px-2 ${
-            selectedItem === 1 && "bg-blue-700  rounded-lg text-white font-bold" // Add a different style for the selected item
+            selectedItem === 1 && "bg-blue-700 hover:bg-blue-800  rounded-lg text-white font-bold" // Add a different style for the selected item
           }`}
           onClick={() => handleItemClick(1)} // Handle click event to update selected item
         >
@@ -185,7 +186,7 @@ const BookList = () => {
         <a
          
           className={`flex justify-center py-4  px-2 ${
-            selectedItem === 2 && "bg-blue-700  rounded-lg text-white font-bold" // Add a different style for the selected item
+            selectedItem === 2 && "bg-blue-700 hover:bg-blue-800  rounded-lg text-white font-bold" // Add a different style for the selected item
           }`}
           onClick={() => handleItemClick(2)} // Handle click event to update selected item
         >
@@ -196,7 +197,7 @@ const BookList = () => {
         <a
           
           className={`flex justify-center py-4  px-2 ${
-            selectedItem === 3 && "bg-blue-700  rounded-lg text-white font-bold" // Add a different style for the selected item
+            selectedItem === 3 && "bg-blue-700 hover:bg-blue-800  rounded-lg text-white font-bold" // Add a different style for the selected item
           }`}
           onClick={() => handleItemClick(3)} // Handle click event to update selected item
         >
@@ -234,7 +235,6 @@ const BookList = () => {
           <div className="bg-white rounded-xl w-80 flex flex-start my-1 mx-1 border border-gray-300 shadow-lg" key={book.id}>
             <img src={book.img} className="w-28 rounded-xl"/>
             <div className="w-4/5 h-44 justify-center flex flex-col">
-            <p className="font-light text-slate-500 text-s">{book.id}</p>
               <p className="font-light text-slate-500 text-s">{book.autor}</p>
               <p className="text-black font-black text-lg">{book.tytul}</p>
               <Pages idbk={book.id} pages={book.strony} currentpages={book.strona}/>
@@ -253,11 +253,12 @@ const BookList = () => {
       </div>
       )}
 </div>
-<button type="submit" onClick={handleNewBook} className="text-white fixed bottom-3 right-5  p-0 w-16 h-16 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><svg viewBox="0 0 20 20" enable-background="new 0 0 20 20" className="w-10 h-10 inline-block">
+<button type="submit" onClick={handleNewBook} className="text-white fixed bottom-20 right-5  p-0 w-16 h-16 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><svg viewBox="0 0 20 20" enable-background="new 0 0 20 20" className="w-10 h-10 inline-block">
             <path fill="#FFFFFF" d="M16,10c0,0.553-0.048,1-0.601,1H11v4.399C11,15.951,10.553,16,10,16c-0.553,0-1-0.049-1-0.601V11H4.601
                                     C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399
                                     C15.952,9,16,9.447,16,10z" />
           </svg></button>
+          <PopupForm />
          </>
   );
 };
