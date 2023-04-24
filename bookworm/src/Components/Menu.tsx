@@ -3,12 +3,28 @@ import BooksData from "../Components/Books";
 import Stars from "../Components/Stars";
 import Pages from "../Components/Pages";
 import PopupForm from '../Components/Form';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import { Rating } from "flowbite-react";
 
-
-
-var BookCount = BooksData.length+1;
 
 const BookList = () => {
+  var BookCount = BooksData.length+1;
+const [open, setOpen] = useState(false);
+const [formData, setFormData] = useState({
+  autor: '',
+  tytul: '',
+  iloscStron: 0,
+  przeczytaneStrony: 0,
+  ocenaUzytkownika: 0,
+  zdjecieLink: '',
+  status: 'Czytane',
+});
   const [selectedItem, setSelectedItem] = useState(0); // State to keep track of the selected item
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Book[]>([]);
@@ -31,7 +47,6 @@ const BookList = () => {
   }
 
 
-
   interface Book {
     id: number;
     autor: string;
@@ -47,39 +62,21 @@ const BookList = () => {
 
   var newBook: Book = {
     id: BookCount, // set the id value as needed
-    autor: 'John Doe', // set the autor value as needed
-    rating: 4.5, // set the rating value as needed
-    tytul: 'Example Book', // set the tytul value as needed
-    strony: 300, // set the strony value as needed
-    strona: 100, // set the strona value as needed
+    autor: '', // set the autor value as needed
+    rating: 0, // set the rating value as needed
+    tytul: '', // set the tytul value as needed
+    strony: 0, // set the strony value as needed
+    strona: 0, // set the strona value as needed
     status: 'Czytane', // set the status value as needed
-    img: 'https://images.pexels.com/photos/1525041/pexels-photo-1525041.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500', // set the img value as needed
-    reviews: 50, // set the reviews value as needed
-    userRating: 3.8 // set the userRating value as needed
+    img: '', // set the img value as needed
+    reviews: 0, // set the reviews value as needed
+    userRating: 0 // set the userRating value as needed
   };
 
   const handleNewBook = () => {
     // Save the new book to session storage
     sessionStorage.setItem(`book_${newBook.id}`, JSON.stringify(newBook));
     
-    // Set the status of the new book based on the selected index
-    switch (selectedItem) {
-      case 0:
-        newBook.status = "Czytane";
-        break;
-      case 1:
-        newBook.status = "Przeczytane";
-        break;
-      case 2:
-        newBook.status = "Planowane";
-        break;
-      case 3:
-        newBook.status = "Porzucone";
-        break;
-      default:
-        newBook.status = "Czytane"; // set a default value for the status if needed
-    }
-  
     // Update the BooksData array with the new book
     BooksData.push(newBook);
     
@@ -88,7 +85,7 @@ const BookList = () => {
     
     // Update the cookie with the latest book count
     setCookie("bookCount", BookCount.toString(), 7);
-    
+  
     let filteredBooks = [];
     
     // Set the initial books based on the selected tab
@@ -111,7 +108,6 @@ const BookList = () => {
     
     setBooks(filteredBooks);
   };
-  
   
   // Function to handle setting and getting cookies
   const setCookie = (name: string, value: any, days: number) => {
@@ -163,7 +159,37 @@ const BookList = () => {
     setSearchResults([]);
     setButtonClicked(false);
   };
-  
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleChangeForm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+      
+    });
+  };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    newBook.autor = formData.autor, // set the autor value as needed
+    newBook.rating = 0, // set the rating value as needed
+    newBook.tytul = formData.tytul, // set the tytul value as needed
+    newBook.strony = formData.iloscStron, // set the strony value as needed
+    newBook.strona = formData.przeczytaneStrony, // set the strona value as needed
+    newBook.status = formData.status, // set the status value as needed
+    newBook.img = formData.zdjecieLink, // set the img value as needed
+    newBook.reviews = 0, // set the reviews value as needed
+    newBook.userRating = formData.ocenaUzytkownika // set the userRating value as needed
+    // TODO: Handle form submission logic
+    handleNewBook();
+    handleClose();
+  };
+
   return (
     <>
     
@@ -272,12 +298,137 @@ const BookList = () => {
       </div>
       )}
 </div>
-<button type="submit" onClick={handleNewBook} className="text-white fixed bottom-20 right-5  p-0 w-16 h-16 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><svg viewBox="0 0 20 20" enable-background="new 0 0 20 20" className="w-10 h-10 inline-block">
-            <path fill="#FFFFFF" d="M16,10c0,0.553-0.048,1-0.601,1H11v4.399C11,15.951,10.553,16,10,16c-0.553,0-1-0.049-1-0.601V11H4.601
-                                    C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399
-                                    C15.952,9,16,9.447,16,10z" />
-          </svg></button>
-          <PopupForm />
+<div className="fixed bottom-5 right-5 ">
+      <Button variant="contained" onClick={handleOpen} className="">
+        Dodaj
+      </Button>
+      <Dialog  open={open} onClose={handleClose}>
+        <DialogTitle>Popup Form</DialogTitle>
+        <DialogContent>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              label="Autor"
+              name="autor"
+              value={formData.autor}
+              onChange={handleChangeForm}
+              fullWidth
+              margin="normal"
+              required
+            />
+            <TextField
+              label="Tytuł"
+              name="tytul"
+              value={formData.tytul}
+              onChange={handleChangeForm}
+              fullWidth
+              margin="normal"
+              required
+            />
+            <TextField
+              label="Ilość stron"
+              name="iloscStron"
+              value={formData.iloscStron}
+              onChange={handleChangeForm}
+              fullWidth
+              margin="normal"
+              required
+            />
+            <TextField
+              label="Przeczytane strony"
+              name="przeczytaneStrony"
+              value={formData.przeczytaneStrony}
+              onChange={handleChangeForm}
+              fullWidth
+              margin="normal"
+              required
+            />
+            <TextField
+              select
+              label="Ocena użytkownika"
+              name="ocenaUzytkownika"
+              value={formData.ocenaUzytkownika}
+              onChange={handleChangeForm}
+              fullWidth
+              margin="normal"
+              required
+            >
+              <MenuItem value="0">Brak oceny</MenuItem>
+              <MenuItem value="1">
+              <React.Fragment>
+      <Rating className="pt-1">
+        <Rating.Star filled={true} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+      </Rating>
+    </React.Fragment>
+              </MenuItem>
+              <MenuItem value="2">
+              <React.Fragment>
+      <Rating className="pt-1">
+        <Rating.Star filled={true} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+        <Rating.Star filled={true} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+      </Rating>
+    </React.Fragment>
+                </MenuItem>
+              <MenuItem value="3">              <React.Fragment>
+      <Rating className="pt-1">
+        <Rating.Star filled={true} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+        <Rating.Star filled={true} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+        <Rating.Star filled={true} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+      </Rating>
+    </React.Fragment></MenuItem>
+              <MenuItem value="4"><React.Fragment>
+      <Rating className="pt-1">
+        <Rating.Star filled={true} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+        <Rating.Star filled={true} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+        <Rating.Star filled={true} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+        <Rating.Star filled={true} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+      </Rating>
+    </React.Fragment></MenuItem>
+              <MenuItem value="5">
+              <React.Fragment>
+      <Rating className="pt-1">
+        <Rating.Star filled={true} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+        <Rating.Star filled={true} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+        <Rating.Star filled={true} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+        <Rating.Star filled={true} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+                <Rating.Star filled={true} className="cursor-pointer hover:fill-yellow-500 drop-shadow-md" />
+      </Rating>
+    </React.Fragment>
+              </MenuItem>
+            </TextField>
+            <TextField
+              select
+              label="Status"
+              name="status"
+              value={formData.status}
+              onChange={handleChangeForm}
+              fullWidth
+              margin="normal"
+              required
+            >
+              <MenuItem value="Czytane">Czytane</MenuItem>
+              <MenuItem value="Przeczytane">Przeczytane</MenuItem>
+              <MenuItem value="Planowane">Planowane</MenuItem>
+              <MenuItem value="Porzucone">Porzucone</MenuItem>
+            </TextField>
+            <TextField
+              label="Zdjęcie link"
+              name="zdjecieLink"
+              value={formData.zdjecieLink}
+              onChange={handleChangeForm}
+              fullWidth
+              margin="normal"
+              required
+            />
+            <DialogActions>
+              <Button onClick={handleClose}>Anuluj</Button>
+              <Button type="submit" variant="contained" color="primary">
+                Dodaj
+              </Button>
+            </DialogActions>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </div>
          </>
   );
 };
