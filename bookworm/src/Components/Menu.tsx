@@ -11,83 +11,36 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import { Rating } from "flowbite-react";
 
-
 const BookList = () => {
-  var BookCount = BooksData.length+1;
+var BookCount = BooksData.length+1;
 const [open, setOpen] = useState(false);
-const [formData, setFormData] = useState({
-  autor: '',
-  tytul: '',
-  iloscStron: 0,
-  przeczytaneStrony: 0,
-  ocenaUzytkownika: 0,
-  zdjecieLink: '',
-  status: 'Czytane',
-});
-  const [selectedItem, setSelectedItem] = useState(0); // State to keep track of the selected item
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [searchResults, setSearchResults] = useState<Book[]>([]);
-  const [buttonClicked, setButtonClicked] = useState<boolean>(false);
-  const [books, setBooks] = useState<Book[]>([]);
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+const [formData, setFormData] = useState({ autor: '',  tytul: '', iloscStron: 0, przeczytaneStrony: 0, ocenaUzytkownika: 0, zdjecieLink: '', status: 'Czytane', });
+const formCleanup = () => { setFormData({ autor: '', tytul: '', iloscStron: 0, przeczytaneStrony: 0, ocenaUzytkownika: 0, zdjecieLink: '', status: 'Czytane', }); };
+const [selectedItem, setSelectedItem] = useState(0); // State to keep track of the selected item
+const [searchTerm, setSearchTerm] = useState<string>("");
+const [searchResults, setSearchResults] = useState<Book[]>([]);
+const [buttonClicked, setButtonClicked] = useState<boolean>(false);
+const [books, setBooks] = useState<Book[]>([]);
+const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => { setSearchTerm(event.target.value); };
+const handleButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
     const results = books.filter(
       (book) =>
         book.tytul.toLowerCase().includes(searchTerm.toLowerCase()) || // search by title
         book.autor.toLowerCase().includes(searchTerm.toLowerCase()) // search by author
-    );
-    setSearchResults(results);
-    setButtonClicked(true);
-  }
-
-
-  interface Book {
-    id: number;
-    autor: string;
-    rating: number;
-    tytul: string;
-    strony: number;
-    strona: number;
-    status: string;
-    img: string;
-    reviews: number;
-    userRating: number;
-  }
-
-  var newBook: Book = {
-    id: BookCount, // set the id value as needed
-    autor: '', // set the autor value as needed
-    rating: 0, // set the rating value as needed
-    tytul: '', // set the tytul value as needed
-    strony: 0, // set the strony value as needed
-    strona: 0, // set the strona value as needed
-    status: 'Czytane', // set the status value as needed
-    img: '', // set the img value as needed
-    reviews: 0, // set the reviews value as needed
-    userRating: 0 // set the userRating value as needed
-  };
-
-  const handleNewBook = () => {
-    // Save the new book to session storage
+);
+  setSearchResults(results);
+  setButtonClicked(true); 
+}
+interface Book { id: number; autor: string; rating: number; tytul: string; strony: number; strona: number; status: string; img: string; reviews: number; userRating: number; }
+var newBook: Book = { id: BookCount,  autor: '',  rating: 0, tytul: '',  strony: 0,  strona: 0,  status: 'Czytane',  img: '', reviews: 0,  userRating: 0  
+};
+const handleNewBook = () => {
     sessionStorage.setItem(`book_${newBook.id}`, JSON.stringify(newBook));
-    
-    // Update the BooksData array with the new book
     BooksData.push(newBook);
-    
-    // Update the book count
     BookCount++;
-    
-    // Update the cookie with the latest book count
     setCookie("bookCount", BookCount.toString(), 7);
-  
     let filteredBooks = [];
-    
-    // Set the initial books based on the selected tab
     switch (selectedItem) {
       case 0:
         filteredBooks = BooksData.filter((book) => book.status === "Czytane");
@@ -102,18 +55,14 @@ const [formData, setFormData] = useState({
         filteredBooks = BooksData.filter((book) => book.status === "Porzucone");
         break;
       default:
-        filteredBooks = BooksData;
-    }
-    
-    setBooks(filteredBooks);
+        filteredBooks = BooksData; }
+    setBooks(filteredBooks);  
   };
-  
-  // Function to handle setting and getting cookies
-  const setCookie = (name: string, value: any, days: number) => {
+const setCookie = (name: string, value: any, days: number) => {
     const date = new Date();
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
     const expires = "; expires=" + date.toUTCString();
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    document.cookie = name + "=" + (value || "") + expires + "; path=/"; 
   };
   
   const getCookie = (name: string) => {
@@ -127,16 +76,12 @@ const [formData, setFormData] = useState({
     return null;
   };
   useEffect(() => {
-    // Filter the BooksData array to get "Czytane" books
     const filteredBooks = BooksData.filter((book) => book.status === "Czytane");
-    setBooks(filteredBooks); // Set the filtered books to the books state variable
-  }, []);
-  
+    setBooks(filteredBooks);
+  }, []); 
   const handleItemClick = (index: number) => {
     setSelectedItem(index);
     let filteredBooks = [];
-  
-    // Set the initial books based on the selected tab
     switch (index) {
       case 0:
         filteredBooks = BooksData.filter((book) => book.status === "Czytane");
@@ -161,37 +106,23 @@ const [formData, setFormData] = useState({
   const handleOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-
   const handleChangeForm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-      
     });
   };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    newBook.autor = formData.autor, // set the autor value as needed
-    newBook.rating = 0, // set the rating value as needed
-    newBook.tytul = formData.tytul, // set the tytul value as needed
-    newBook.strony = formData.iloscStron, // set the strony value as needed
-    newBook.strona = formData.przeczytaneStrony, // set the strona value as needed
-    newBook.status = formData.status, // set the status value as needed
-    newBook.img = formData.zdjecieLink, // set the img value as needed
-    newBook.reviews = 0, // set the reviews value as needed
-    newBook.userRating = formData.ocenaUzytkownika // set the userRating value as needed
-    // TODO: Handle form submission logic
-    handleNewBook();
-    handleClose();
+    newBook.autor = formData.autor, newBook.rating = 0, newBook.tytul = formData.tytul, newBook.strony = formData.iloscStron,  newBook.strona = formData.przeczytaneStrony,
+    newBook.status = formData.status,  newBook.img = formData.zdjecieLink,  newBook.reviews = 0,  newBook.userRating = formData.ocenaUzytkownika 
+    handleNewBook();  formCleanup();  handleClose();
   };
-
   return (
     <>
-    
     <form onSubmit={handleButtonClick}> {/* add onSubmit handler */}
         <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only  dark:text-white">Wyszukaj</label>
         <div className="relative">
@@ -268,6 +199,7 @@ const [formData, setFormData] = useState({
                   <div className="flex items-center justify-center">
                     <Stars idbook={book.id} rating={book.userRating} />
                   </div>
+                  <button className="bg-blue-600 text-white rounded-full px-2 py-1 mb-1 mt-1">Status</button>
                 </p>
               </div>
             </div>
@@ -289,8 +221,9 @@ const [formData, setFormData] = useState({
 </div>
 <p className="text-sm font-medium text-gray-500 dark:text-gray-400"><div className="flex items-center justify-center">
 <Stars idbook={book.id} rating={book.userRating}/>
-
-              </div></p>
+              </div>
+              <button className="bg-blue-600 text-white rounded-full px-2 py-1 mb-1 mt-1">Status</button>
+              </p>
             </div>
           </div>
         ))}
@@ -313,7 +246,9 @@ const [formData, setFormData] = useState({
               fullWidth
               margin="normal"
               required
-            />
+              inputProps={{
+                pattern: '[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\\s]*', // Allow alphabetic characters and spaces
+              }}/>
             <TextField
               label="Tytuł"
               name="tytul"
@@ -331,6 +266,10 @@ const [formData, setFormData] = useState({
               fullWidth
               margin="normal"
               required
+              inputProps={{
+                inputMode: 'numeric',
+                pattern: '[0-9]*',
+              }}
             />
             <TextField
               label="Przeczytane strony"
@@ -340,6 +279,10 @@ const [formData, setFormData] = useState({
               fullWidth
               margin="normal"
               required
+              inputProps={{
+                inputMode: 'numeric',
+                pattern: '[0-9]*',
+              }}
             />
             <TextField
               select
@@ -417,6 +360,7 @@ const [formData, setFormData] = useState({
               fullWidth
               margin="normal"
               required
+              type="url"
             />
             <DialogActions>
               <Button onClick={handleClose}>Anuluj</Button>
