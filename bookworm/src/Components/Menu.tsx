@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Books from "../Components/Books";
+import BooksData from "../Components/Books";
 import Stars from "../Components/Stars";
 import Pages from "../Components/Pages";
 
-var BooksData = Books;
-var BookCount = BooksData.length;
+
+var BookCount = BooksData.length+1;
 
 const BookList = () => {
   const [selectedItem, setSelectedItem] = useState(0); // State to keep track of the selected item
@@ -19,7 +19,7 @@ const BookList = () => {
 
   const handleButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const results = BooksData.filter(
+    const results = books.filter(
       (book) =>
         book.tytul.toLowerCase().includes(searchTerm.toLowerCase()) || // search by title
         book.autor.toLowerCase().includes(searchTerm.toLowerCase()) // search by author
@@ -27,26 +27,9 @@ const BookList = () => {
     setSearchResults(results);
     setButtonClicked(true);
     setSelectedItem(5);
-  };
+  }
 
-  const handleItemClick = (index: number) => {
-    setSelectedItem(index);
-    if (index === 0) {
-      const filteredBooks = BooksData.filter((book) => book.status === "Czytane");
-      setBooks(filteredBooks);
-    } else if (index === 1) {
-      const filteredBooks = BooksData.filter((book) => book.status === "Przeczytane");
-      setBooks(filteredBooks);
-    } else if (index === 2) {
-      const filteredBooks = BooksData.filter((book) => book.status === "Planowane");
-      setBooks(filteredBooks);
-    } else if (index === 3) {
-      const filteredBooks = BooksData.filter((book) => book.status === "Porzucone");
-      setBooks(filteredBooks);
-    }
-    setSearchResults([]);
-    setButtonClicked(false);
-  };
+
 
   interface Book {
     id: number;
@@ -74,25 +57,42 @@ const BookList = () => {
     userRating: 3.8 // set the userRating value as needed
   };
 
-
   const handleNewBook = () => {
     // Save the new book to session storage
     sessionStorage.setItem(`book_${newBook.id}`, JSON.stringify(newBook));
-    setBooks(prevBooks => [...prevBooks, newBook]);
+    
+    // Update the BooksData array with the new book
+    BooksData.push(newBook);
+    
+    // Update the book count
     BookCount++;
-  
+    
     // Update the cookie with the latest book count
     setCookie("bookCount", BookCount.toString(), 7);
-  };
-
-
-  useEffect(() => {
-    if (BooksData) { // Add a conditional check to ensure BooksData is not null
-      const filteredBooks = BooksData.filter((book) => book.status === "Czytane");
-      setBooks(filteredBooks);
+  
+    let filteredBooks = [];
+    
+    // Set the initial books based on the selected tab
+    switch (selectedItem) {
+      case 0:
+        filteredBooks = BooksData.filter((book) => book.status === "Czytane");
+        break;
+      case 1:
+        filteredBooks = BooksData.filter((book) => book.status === "Przeczytane");
+        break;
+      case 2:
+        filteredBooks = BooksData.filter((book) => book.status === "Planowane");
+        break;
+      case 3:
+        filteredBooks = BooksData.filter((book) => book.status === "Porzucone");
+        break;
+      default:
+        filteredBooks = BooksData;
     }
-  }, [BooksData]);
-
+    
+    setBooks(filteredBooks);
+  };
+  
   // Function to handle setting and getting cookies
   const setCookie = (name: string, value: any, days: number) => {
     const date = new Date();
@@ -100,30 +100,6 @@ const BookList = () => {
     const expires = "; expires=" + date.toUTCString();
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
   };
-  useEffect(() => {
-    // Retrieve books from session storage and set state
-    const savedBooks = [];
-    for (let i = 0; i < sessionStorage.length; i++) {
-      const key = sessionStorage.key(i);
-      if (key?.startsWith('book_')) {
-        const item = sessionStorage.getItem(key);
-        if (item !== null) { // Add null check
-          try {
-            // Check if item is a valid JSON string
-            const isJsonString = typeof item === 'string' && item.startsWith('{') && item.endsWith('}');
-            if (isJsonString) {
-              const book = JSON.parse(item);
-              savedBooks.push(book);
-            }
-          } catch (error) {
-            // Handle JSON parsing error, e.g. log or display an error message
-            console.error('Error parsing JSON:', error);
-          }
-        }
-      }
-    }
-    // rest of the code
-  }, []);
   
   const getCookie = (name: string) => {
     const nameEQ = name + "=";
@@ -135,9 +111,42 @@ const BookList = () => {
     }
     return null;
   };
+  useEffect(() => {
+    // Filter the BooksData array to get "Czytane" books
+    const filteredBooks = BooksData.filter((book) => book.status === "Czytane");
+    setBooks(filteredBooks); // Set the filtered books to the books state variable
+  }, []);
+  
+  const handleItemClick = (index: number) => {
+    setSelectedItem(index);
+    let filteredBooks = [];
+  
+    // Set the initial books based on the selected tab
+    switch (index) {
+      case 0:
+        filteredBooks = BooksData.filter((book) => book.status === "Czytane");
+        break;
+      case 1:
+        filteredBooks = BooksData.filter((book) => book.status === "Przeczytane");
+        break;
+      case 2:
+        filteredBooks = BooksData.filter((book) => book.status === "Planowane");
+        break;
+      case 3:
+        filteredBooks = BooksData.filter((book) => book.status === "Porzucone");
+        break;
+      default:
+        filteredBooks = BooksData;
+    }
+  
+    setBooks(filteredBooks);
+    setSearchResults([]);
+    setButtonClicked(false);
+  };
   
   return (
     <>
+    
     <form onSubmit={handleButtonClick}> {/* add onSubmit handler */}
         <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only  dark:text-white">Wyszukaj</label>
         <div className="relative">
