@@ -62,6 +62,24 @@ const BookList = () => {
     // Save the new book to session storage
     sessionStorage.setItem(`book_${newBook.id}`, JSON.stringify(newBook));
     
+    // Set the status of the new book based on the selected index
+    switch (selectedItem) {
+      case 0:
+        newBook.status = "Czytane";
+        break;
+      case 1:
+        newBook.status = "Przeczytane";
+        break;
+      case 2:
+        newBook.status = "Planowane";
+        break;
+      case 3:
+        newBook.status = "Porzucone";
+        break;
+      default:
+        newBook.status = "Czytane"; // set a default value for the status if needed
+    }
+  
     // Update the BooksData array with the new book
     BooksData.push(newBook);
     
@@ -70,7 +88,7 @@ const BookList = () => {
     
     // Update the cookie with the latest book count
     setCookie("bookCount", BookCount.toString(), 7);
-  
+    
     let filteredBooks = [];
     
     // Set the initial books based on the selected tab
@@ -93,6 +111,7 @@ const BookList = () => {
     
     setBooks(filteredBooks);
   };
+  
   
   // Function to handle setting and getting cookies
   const setCookie = (name: string, value: any, days: number) => {
