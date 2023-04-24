@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import BooksData from "../Components/Books";
 import Stars from "../Components/Stars";
 import Pages from "../Components/Pages";
-import PopupForm from '../Components/Form';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -303,7 +302,7 @@ const [formData, setFormData] = useState({
         Dodaj
       </Button>
       <Dialog  open={open} onClose={handleClose}>
-        <DialogTitle>Popup Form</DialogTitle>
+        <DialogTitle>Dodaj własną książkę</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit}>
             <TextField
