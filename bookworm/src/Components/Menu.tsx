@@ -21,6 +21,7 @@ const [searchTerm, setSearchTerm] = useState<string>("");
 const [searchResults, setSearchResults] = useState<Book[]>([]);
 const [buttonClicked, setButtonClicked] = useState<boolean>(false);
 const [books, setBooks] = useState<Book[]>([]);
+const [bookCount, setBookCount] = useState(0);
 const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => { setSearchTerm(event.target.value); };
 const handleButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
@@ -36,28 +37,37 @@ interface Book { id: number; autor: string; rating: number; tytul: string; stron
 var newBook: Book = { id: BookCount,  autor: '',  rating: 0, tytul: '',  strony: 0,  strona: 0,  status: 'Czytane',  img: '', reviews: 0,  userRating: 0  
 };
 const handleNewBook = () => {
-    sessionStorage.setItem(`book_${newBook.id}`, JSON.stringify(newBook));
-    BooksData.push(newBook);
-    BookCount++;
-    setCookie("bookCount", BookCount.toString(), 7);
-    let filteredBooks = [];
-    switch (selectedItem) {
-      case 0:
-        filteredBooks = BooksData.filter((book) => book.status === "Czytane");
-        break;
-      case 1:
-        filteredBooks = BooksData.filter((book) => book.status === "Przeczytane");
-        break;
-      case 2:
-        filteredBooks = BooksData.filter((book) => book.status === "Planowane");
-        break;
-      case 3:
-        filteredBooks = BooksData.filter((book) => book.status === "Porzucone");
-        break;
-      default:
-        filteredBooks = BooksData; }
-    setBooks(filteredBooks);  
-  };
+const existingBooks = JSON.parse(localStorage.getItem('books') || '[]'); // Retrieve existing book data from LocalStorage
+const updatedBooks = [...existingBooks, newBook]; // Create a new array by merging the existing books with the new book data
+localStorage.setItem('books', JSON.stringify(updatedBooks)); // Set the updated book data back into LocalStorage
+
+const allBooks = [...updatedBooks, ...BooksData];
+
+// Filter the books based on the selected tab
+let filteredBooks = [];
+switch (selectedItem) {
+  case 0:
+    filteredBooks = allBooks.filter((book) => book.status === "Czytane");
+    break;
+  case 1:
+    filteredBooks = allBooks.filter((book) => book.status === "Przeczytane");
+    break;
+  case 2:
+    filteredBooks = allBooks.filter((book) => book.status === "Planowane");
+    break;
+  case 3:
+    filteredBooks = allBooks.filter((book) => book.status === "Porzucone");
+    break;
+  default:
+    filteredBooks = allBooks;
+}
+
+// Set the filtered books to the books state variable
+setBooks(filteredBooks);
+
+};
+
+
 const setCookie = (name: string, value: any, days: number) => {
     const date = new Date();
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
@@ -76,9 +86,35 @@ const setCookie = (name: string, value: any, days: number) => {
     return null;
   };
   useEffect(() => {
-    const filteredBooks = BooksData.filter((book) => book.status === "Czytane");
+    // Retrieve saved books from local storage
+    const existingBooks = JSON.parse(localStorage.getItem('books') || '[]');
+  
+    // Add BooksData to savedBooks
+    const allBooks = [...existingBooks, ...BooksData];
+  
+    // Set the initial books based on the selected tab
+    let filteredBooks = [];
+    switch (selectedItem) {
+      case 0:
+        filteredBooks = allBooks.filter((book) => book.status === "Czytane");
+        break;
+      case 1:
+        filteredBooks = allBooks.filter((book) => book.status === "Przeczytane");
+        break;
+      case 2:
+        filteredBooks = allBooks.filter((book) => book.status === "Planowane");
+        break;
+      case 3:
+        filteredBooks = allBooks.filter((book) => book.status === "Porzucone");
+        break;
+      default:
+        filteredBooks = allBooks;
+    }
+  
+    // Set the filtered books to the books state variable
     setBooks(filteredBooks);
-  }, []); 
+  }, [selectedItem]);
+  
   const handleItemClick = (index: number) => {
     setSelectedItem(index);
     let filteredBooks = [];
