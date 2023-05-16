@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Rating } from "flowbite-react";
 
 const BookList = () => {
-var BookCount = BooksData.length+1;
+var BookCount = 20;
 const [open, setOpen] = useState(false);
 const [formData, setFormData] = useState({ autor: '',  tytul: '', iloscStron: 0, przeczytaneStrony: 0, ocenaUzytkownika: 0, zdjecieLink: '', status: 'Czytane', });
 const formCleanup = () => { setFormData({ autor: '', tytul: '', iloscStron: 0, przeczytaneStrony: 0, ocenaUzytkownika: 0, zdjecieLink: '', status: 'Czytane', }); };
@@ -21,7 +21,7 @@ const [searchTerm, setSearchTerm] = useState<string>("");
 const [searchResults, setSearchResults] = useState<Book[]>([]);
 const [buttonClicked, setButtonClicked] = useState<boolean>(false);
 const [books, setBooks] = useState<Book[]>([]);
-const [bookCount, setBookCount] = useState(0);
+const [bookCount, setBookCount] = useState()
 const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => { setSearchTerm(event.target.value); };
 const handleButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
@@ -37,34 +37,49 @@ interface Book { id: number; autor: string; rating: number; tytul: string; stron
 var newBook: Book = { id: BookCount,  autor: '',  rating: 0, tytul: '',  strony: 0,  strona: 0,  status: 'Czytane',  img: '', reviews: 0,  userRating: 0  
 };
 const handleNewBook = () => {
-const existingBooks = JSON.parse(localStorage.getItem('books') || '[]'); // Retrieve existing book data from LocalStorage
-const updatedBooks = [...existingBooks, newBook]; // Create a new array by merging the existing books with the new book data
-localStorage.setItem('books', JSON.stringify(updatedBooks)); // Set the updated book data back into LocalStorage
+ // Retrieve existing book data from LocalStorage
+ const existingBooks = JSON.parse(localStorage.getItem('books') || '[]');
+ const lastId = existingBooks.length > 0 ? existingBooks[existingBooks.length - 1].id : 0;
+ if(lastId == 0) 
+ {newBook.id = 20;}
+ else 
+  {newBook.id = lastId + 1;}
+ const uniqueBooks = existingBooks.filter((book: Book) => book.id !== newBook.id);
+ const updatedBooks = [...uniqueBooks, newBook];
 
-const allBooks = [...updatedBooks, ...BooksData];
+ // Set the updated book data back into LocalStorage
+ localStorage.setItem('books', JSON.stringify(updatedBooks));
 
-// Filter the books based on the selected tab
-let filteredBooks = [];
-switch (selectedItem) {
-  case 0:
-    filteredBooks = allBooks.filter((book) => book.status === "Czytane");
-    break;
-  case 1:
-    filteredBooks = allBooks.filter((book) => book.status === "Przeczytane");
-    break;
-  case 2:
-    filteredBooks = allBooks.filter((book) => book.status === "Planowane");
-    break;
-  case 3:
-    filteredBooks = allBooks.filter((book) => book.status === "Porzucone");
-    break;
-  default:
-    filteredBooks = allBooks;
-}
+ // Merge BooksData with updatedBooks and remove duplicates
+ const mergedBooks = [...updatedBooks, ...BooksData];
+ const mergedUniqueBooks = mergedBooks.reduce((acc: Book[], book: Book) => {
+  if (!acc.find((b) => b.id === book.id)) {
+    acc.push(book);
+  }
+  return acc;
+}, []);
 
-// Set the filtered books to the books state variable
-setBooks(filteredBooks);
+ // Filter the books based on the selected tab
+ let filteredBooks = [];
+ switch (selectedItem) {
+   case 0:
+     filteredBooks = mergedUniqueBooks.filter((book: Book) => book.status === "Czytane");
+     break;
+   case 1:
+     filteredBooks = mergedUniqueBooks.filter((book: Book) => book.status === "Przeczytane");
+     break;
+   case 2:
+     filteredBooks = mergedUniqueBooks.filter((book: Book) => book.status === "Planowane");
+     break;
+   case 3:
+     filteredBooks = mergedUniqueBooks.filter((book: Book) => book.status === "Porzucone");
+     break;
+   default:
+     filteredBooks = mergedUniqueBooks;
+ }
 
+ // Set the filtered books to the books state variable
+ setBooks(filteredBooks);
 };
 
 
@@ -86,58 +101,79 @@ const setCookie = (name: string, value: any, days: number) => {
     return null;
   };
   useEffect(() => {
-    // Retrieve saved books from local storage
-    const existingBooks = JSON.parse(localStorage.getItem('books') || '[]');
-  
-    // Add BooksData to savedBooks
-    const allBooks = [...existingBooks, ...BooksData];
-  
-    // Set the initial books based on the selected tab
-    let filteredBooks = [];
-    switch (selectedItem) {
-      case 0:
-        filteredBooks = allBooks.filter((book) => book.status === "Czytane");
-        break;
-      case 1:
-        filteredBooks = allBooks.filter((book) => book.status === "Przeczytane");
-        break;
-      case 2:
-        filteredBooks = allBooks.filter((book) => book.status === "Planowane");
-        break;
-      case 3:
-        filteredBooks = allBooks.filter((book) => book.status === "Porzucone");
-        break;
-      default:
-        filteredBooks = allBooks;
-    }
-  
-    // Set the filtered books to the books state variable
-    setBooks(filteredBooks);
+
+     // Retrieve saved books from local storage
+  const existingBooks: Book[] = JSON.parse(localStorage.getItem('books') || '[]');
+
+  // Set the initial books based on the selected tab
+  const mergedBooks = [...existingBooks, ...BooksData];
+ const mergedUniqueBooks = mergedBooks.reduce((acc: Book[], book: Book) => {
+  if (!acc.find((b) => b.id === book.id)) {
+    acc.push(book);
+  }
+  return acc;
+}, []);
+
+ // Filter the books based on the selected tab
+ let filteredBooks = [];
+ switch (selectedItem) {
+   case 0:
+     filteredBooks = mergedUniqueBooks.filter((book: Book) => book.status === "Czytane");
+     break;
+   case 1:
+     filteredBooks = mergedUniqueBooks.filter((book: Book) => book.status === "Przeczytane");
+     break;
+   case 2:
+     filteredBooks = mergedUniqueBooks.filter((book: Book) => book.status === "Planowane");
+     break;
+   case 3:
+     filteredBooks = mergedUniqueBooks.filter((book: Book) => book.status === "Porzucone");
+     break;
+   default:
+     filteredBooks = mergedUniqueBooks;
+ }
+
+ // Set the filtered books to the books state variable
+ setBooks(filteredBooks);
   }, [selectedItem]);
   
   const handleItemClick = (index: number) => {
     setSelectedItem(index);
-    let filteredBooks = [];
-    switch (index) {
-      case 0:
-        filteredBooks = BooksData.filter((book) => book.status === "Czytane");
-        break;
-      case 1:
-        filteredBooks = BooksData.filter((book) => book.status === "Przeczytane");
-        break;
-      case 2:
-        filteredBooks = BooksData.filter((book) => book.status === "Planowane");
-        break;
-      case 3:
-        filteredBooks = BooksData.filter((book) => book.status === "Porzucone");
-        break;
-      default:
-        filteredBooks = BooksData;
+
+    const existingBooks: Book[] = JSON.parse(localStorage.getItem('books') || '[]');
+
+    // Set the initial books based on the selected tab
+    const mergedBooks = [...existingBooks, ...BooksData];
+   const mergedUniqueBooks = mergedBooks.reduce((acc: Book[], book: Book) => {
+    if (!acc.find((b) => b.id === book.id)) {
+      acc.push(book);
     }
+    return acc;
+  }, []);
   
-    setBooks(filteredBooks);
-    setSearchResults([]);
-    setButtonClicked(false);
+   // Filter the books based on the selected tab
+   let filteredBooks = [];
+   switch (selectedItem) {
+     case 0:
+       filteredBooks = mergedUniqueBooks.filter((book: Book) => book.status === "Czytane");
+       break;
+     case 1:
+       filteredBooks = mergedUniqueBooks.filter((book: Book) => book.status === "Przeczytane");
+       break;
+     case 2:
+       filteredBooks = mergedUniqueBooks.filter((book: Book) => book.status === "Planowane");
+       break;
+     case 3:
+       filteredBooks = mergedUniqueBooks.filter((book: Book) => book.status === "Porzucone");
+       break;
+     default:
+       filteredBooks = mergedUniqueBooks;
+   }
+  
+   // Set the filtered books to the books state variable
+   setBooks(filteredBooks);
+      setSearchResults([]);
+      setButtonClicked(false);
   };
   const handleOpen = () => {
     setOpen(true);
