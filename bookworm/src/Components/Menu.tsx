@@ -43,7 +43,6 @@ const handleButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
     setSearchResults([]);
     setButtonClicked(true);
     alert("Nie ma takiej książki!");
-    selectedItem=0;
   } else {
     // Matching books found
     setSearchResults(results);
