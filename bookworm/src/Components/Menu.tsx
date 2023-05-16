@@ -38,8 +38,17 @@ const handleButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
       book.autor.toLowerCase().includes(searchTerm.toLowerCase()) // search by author
   );
 
-  setSearchResults(results);
-  setButtonClicked(true);
+  if (results.length === 0) {
+    // No matching books found
+    setSearchResults([]);
+    setButtonClicked(true);
+    alert("Nie ma takiej książki!");
+    selectedItem=0;
+  } else {
+    // Matching books found
+    setSearchResults(results);
+    setButtonClicked(true);
+  }
 }
 interface Book { id: number; autor: string; rating: number; tytul: string; strony: number; strona: number; status: string; img: string; reviews: number; userRating: number; }
 var newBook: Book = { id: BookCount,  autor: '',  rating: 0, tytul: '',  strony: 0,  strona: 0,  status: 'Czytane',  img: '', reviews: 0,  userRating: 0  
