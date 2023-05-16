@@ -25,13 +25,21 @@ const [bookCount, setBookCount] = useState()
 const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => { setSearchTerm(event.target.value); };
 const handleButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
-    const results = books.filter(
-      (book) =>
-        book.tytul.toLowerCase().includes(searchTerm.toLowerCase()) || // search by title
-        book.autor.toLowerCase().includes(searchTerm.toLowerCase()) // search by author
-);
+
+  // Retrieve saved books from local storage
+  const existingBooks: Book[] = JSON.parse(localStorage.getItem('books') || '[]');
+
+  // Merge existingBooks with BooksData
+  const mergedBooks = [...existingBooks, ...BooksData];
+
+  const results = mergedBooks.filter(
+    (book) =>
+      book.tytul.toLowerCase().includes(searchTerm.toLowerCase()) || // search by title
+      book.autor.toLowerCase().includes(searchTerm.toLowerCase()) // search by author
+  );
+
   setSearchResults(results);
-  setButtonClicked(true); 
+  setButtonClicked(true);
 }
 interface Book { id: number; autor: string; rating: number; tytul: string; strony: number; strona: number; status: string; img: string; reviews: number; userRating: number; }
 var newBook: Book = { id: BookCount,  autor: '',  rating: 0, tytul: '',  strony: 0,  strona: 0,  status: 'Czytane',  img: '', reviews: 0,  userRating: 0  
