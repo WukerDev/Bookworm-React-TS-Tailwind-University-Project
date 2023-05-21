@@ -24,18 +24,6 @@ var Books = [
         "img": "https://m.media-amazon.com/images/I/91dSMhdIzTL._AC_UF1000,1000_QL80_.jpg"
     },
     {
-        "id": 3,
-        "autor": "Margaret Atwood",
-        "tytul": "The Handmaid's Tale",
-        "rating": 4.1,
-        "reviews": 520,
-        "userRating": 4,
-        "strony": 311,
-        "strona": 145,
-        "status": "Czytane",
-        "img": "https://images.booksense.com/images/818/490/9780385490818.jpg"
-    },
-    {
         "id": 4,
         "autor": "Haruki Murakami",
         "tytul": "Norwegian Wood",
