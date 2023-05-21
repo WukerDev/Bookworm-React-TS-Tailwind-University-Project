@@ -10,7 +10,6 @@ const MyComponent: React.FC = () => {
 
   return (
     <div>
-      <button onClick={showBooksContent}>Show Books Content</button>
       <div className="text-black">{booksContent}</div>
     </div>
   );
