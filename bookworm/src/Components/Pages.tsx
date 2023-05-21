@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Rating } from "flowbite-react";
 import BooksData from '../Components/Books';
 import Minus from './minus.svg';
@@ -37,6 +37,10 @@ interface Props {
 
 const Pages: React.FC<Props> = ({ idbk, pages, currentpages }) => {
   const [currentPage, setCurrentPage] = useState(currentpages);
+  const [maxPages, setMaxPages] = useState(pages);
+
+  const currentPageRef = useRef(currentPage);
+  currentPageRef.current = currentPage;
 
   // Load current page value from cookie on component mount
   useEffect(() => {
@@ -46,37 +50,44 @@ const Pages: React.FC<Props> = ({ idbk, pages, currentpages }) => {
     }
   }, []);
 
-  const handleIncrement = () => {
-    if (currentPage < pages) {
-      const updatedPage = currentPage + 1;
-      setCurrentPage(updatedPage);
-      setCookie(`currentPage-${idbk}`, updatedPage.toString(), 7); // Set cookie for current page
+  const handlePageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = Number(e.target.value);
+
+    if (!isNaN(newValue) && newValue <= maxPages) {
+      setCurrentPage(newValue);
+      setCookie(`currentPage-${idbk}`, newValue.toString(), 7); // Set cookie for current page
     }
   };
 
-  const handleDecrement = () => {
-    if (currentPage > 0) {
-      const updatedPage = currentPage - 1;
-      setCurrentPage(updatedPage);
-      setCookie(`currentPage-${idbk}`, updatedPage.toString(), 7); // Set cookie for current page
+  const handleMaxPagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = Number(e.target.value);
+
+    if (!isNaN(newValue) && newValue >= 0 && newValue >= currentPageRef.current) {
+      setMaxPages(newValue);
+      if (currentPage > newValue) {
+        setCurrentPage(newValue);
+        setCookie(`currentPage-${idbk}`, newValue.toString(), 7); // Set cookie for current page
+      }
     }
   };
 
   return (
-    <span className="flex-wrap flex justify-center gap-1 py-1">
-      <img
-        src={Minus}
-        className="h-5 w-5 cursor-pointer"
-        onClick={handleDecrement}
-      />
-      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-        {currentPage} / {pages}
-      </p>
-      <img
-        src={Plus}
-        className="h-5 w-5 cursor-pointer"
-        onClick={handleIncrement}
-      />
+    <span className="flex-wrap flex justify-center">
+      <div className="gap-0">
+        <input
+          type="number"
+          value={currentPage}
+          onChange={handlePageChange}
+          className="text-sm font-medium text-gray-500 dark:text-gray-400 w-20 text-right border-none outline-none outline-offset-0"
+        />
+          <span  className="text-sm font-medium text-gray-500 dark:text-gray-400 w-20 text-right border-none outline-none outline-offset-0">/</span>
+        <input
+          type="number"
+          value={maxPages}
+          onChange={handleMaxPagesChange}
+          className="text-sm font-medium text-gray-500 dark:text-gray-400 w-20 text-left border-none outline-none outline-offset-0"
+        />
+      </div>
     </span>
   );
 };
