@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 
 import BookList from '../Components/Menu';
 import selectedItem from '../Components/Menu';
+import MyComponent from "../Components/test";
 
 
 
@@ -24,7 +25,7 @@ export default function Home() {
 <BookList/>
 
 
-
+<MyComponent/>
 
 </div>
     </>
