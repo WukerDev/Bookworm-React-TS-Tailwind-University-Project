@@ -72,13 +72,13 @@ const Pages: React.FC<Props> = ({ idbk, pages, currentpages }) => {
   };
 
   return (
-    <span className="flex-wrap flex justify-center">
+    <span className="h-6 flex justify-center mb-2 -mt-0.5">
       <div className="gap-0">
         <input
           type="number"
           value={currentPage}
           onChange={handlePageChange}
-          className="text-sm font-medium text-gray-500 dark:text-gray-400 w-20 text-right border-none outline-none outline-offset-0"
+          className="text-sm font-medium text-gray-500 dark:text-gray-400 w-20 text-right border-none outline-none outline-offset-8"
         />
           <span  className="text-sm font-medium text-gray-500 dark:text-gray-400 w-20 text-right border-none outline-none outline-offset-0">/</span>
         <input

@@ -10,6 +10,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import { Rating } from "flowbite-react";
+import blank  from "../Components/blank.png";
+import check  from "../Components/check.png";
+import close  from "../Components/close.png";
+import going from "../Components/going.png";
+import StatusManagerComponent from "../Components/status";
+
 
 const BookList = () => {
 var BookCount = 20;
@@ -31,6 +37,8 @@ const handleButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
 
   // Merge existingBooks with BooksData
   const mergedBooks = [...existingBooks, ...BooksData];
+
+// StatusMengaerComponent
 
   const results = mergedBooks.filter(
     (book) =>
@@ -203,6 +211,60 @@ const setCookie = (name: string, value: any, days: number) => {
       [e.target.name]: e.target.value,
     });
   };
+  const handleStatusChange = (bookId: number, newStatus: string) => {
+  const updatedBooks = books.map((book) => {
+    if (book.id === bookId) {
+      book.status = newStatus;
+      // Set the updated book status in local storage
+      const existingBooks: Book[] = JSON.parse(localStorage.getItem('books') || '[]');
+      const updatedExistingBooks = existingBooks.map((existingBook) => {
+        if (existingBook.id === bookId) {
+          existingBook.status = newStatus;
+        }
+        return existingBook;
+      });
+      localStorage.setItem('books', JSON.stringify(updatedExistingBooks));
+    }
+    return book;
+  });
+  setBooks(updatedBooks);
+};
+
+useEffect(() => {
+  // Retrieve saved books from local storage
+  const existingBooks: Book[] = JSON.parse(localStorage.getItem('books') || '[]');
+
+  // Set the initial books based on the selected tab
+  const mergedBooks = [...existingBooks, ...BooksData];
+  const mergedUniqueBooks = mergedBooks.reduce((acc: Book[], book: Book) => {
+    if (!acc.find((b) => b.id === book.id)) {
+      acc.push(book);
+    }
+    return acc;
+  }, []);
+
+  // Filter the books based on the selected tab and updated book statuses
+  let filteredBooks = [];
+  switch (selectedItem) {
+    case 0:
+      filteredBooks = mergedUniqueBooks.filter((book: Book) => book.status === 'Czytane');
+      break;
+    case 1:
+      filteredBooks = mergedUniqueBooks.filter((book: Book) => book.status === 'Przeczytane');
+      break;
+    case 2:
+      filteredBooks = mergedUniqueBooks.filter((book: Book) => book.status === 'Planowane');
+      break;
+    case 3:
+      filteredBooks = mergedUniqueBooks.filter((book: Book) => book.status === 'Porzucone');
+      break;
+    default:
+      filteredBooks = mergedUniqueBooks;
+  }
+
+  // Set the filtered books to the books state variable
+  setBooks(filteredBooks);
+}, [selectedItem]);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     newBook.autor = formData.autor, newBook.rating = 0, newBook.tytul = formData.tytul, newBook.strony = formData.iloscStron,  newBook.strona = formData.przeczytaneStrony,
@@ -272,11 +334,11 @@ const setCookie = (name: string, value: any, days: number) => {
       {buttonClicked && searchResults.length > 0 ? (
           <div id="content" className="flex flex-wrap justify-center pt-1 ">
           {searchResults.map(book => (
-            <div id="debug" className="bg-white rounded-xl  w-80 flex flex-start my-1 mx-1 border border-gray-300 shadow-lg" key={book.id}>
+            <div id="debug" className="bg-white rounded-xl  w-80 h-48 flex flex-start my-1 mx-1 border border-gray-300 shadow-lg" key={book.id}>
               <img src={book.img} className="w-28 rounded-xl"/>
               <div className="w-4/5 h-44 justify-center flex flex-col ">
-                <p className="font-light text-slate-500 text-s">{book.autor}</p>
-                <p className="text-black font-black text-lg">{book.tytul}</p>
+              <p className="font-light text-slate-500 text-s -mb-2">{book.autor}</p>
+                <p className="font-black text-md text-black -mb-0.5">{book.tytul}</p>
                 <Pages idbk={book.id} pages={book.strony} currentpages={book.strona}/>
                 <div className="flex items-center justify-center">
                   <p className="bg-blue-100 text-blue-800 text-sm font-semibold inline-flex items-center p-1.5 rounded dark:bg-blue-200 dark:text-blue-800 drop-shadow-md">{book.rating}</p>
@@ -287,7 +349,7 @@ const setCookie = (name: string, value: any, days: number) => {
                   <div className="flex items-center justify-center">
                     <Stars idbook={book.id} rating={book.userRating} />
                   </div>
-                  <button className="bg-blue-600 text-white rounded-full px-2 py-1 mb-1 mt-1">Status</button>
+                  <StatusManagerComponent idbook={book.id} status={book.status}/>
                 </p>
               </div>
             </div>
@@ -296,11 +358,11 @@ const setCookie = (name: string, value: any, days: number) => {
       ) : (
         <div id="content" className="flex flex-wrap justify-center pt-1">
         {books.map(book =>  (
-          <div className="bg-white rounded-xl w-80 flex flex-start my-1 mx-1 border border-gray-300 shadow-lg" key={book.id}>
+            <div id="debug" className="bg-white rounded-xl  w-80 h-48 flex flex-start my-1 mx-1 border border-gray-300 shadow-lg" key={book.id}>
             <img src={book.img} className="w-28 rounded-xl"/>
             <div className="w-4/5 h-44 justify-center flex flex-col">
-              <p className="font-light text-slate-500 text-s">{book.autor}</p>
-              <p className="text-black font-black text-lg">{book.tytul}</p>
+              <p className="font-light text-slate-500 text-s -mb-2">{book.autor}</p>
+              <p className="text-black font-black text-lg -mb-0.5">{book.tytul}</p>
               <Pages idbk={book.id} pages={book.strony} currentpages={book.strona}/>
               <div className="flex items-center justify-center">
     <p className="bg-blue-100 text-blue-800 text-sm font-semibold inline-flex items-center p-1.5 rounded dark:bg-blue-200 drop-shadow-md dark:text-blue-800">{book.rating}</p>
@@ -310,8 +372,8 @@ const setCookie = (name: string, value: any, days: number) => {
 <p className="text-sm font-medium text-gray-500 dark:text-gray-400"><div className="flex items-center justify-center">
 <Stars idbook={book.id} rating={book.userRating}/>
               </div>
-              <button className="bg-blue-600 text-white rounded-full px-2 py-1 mb-1 mt-1">Status</button>
               </p>
+              <StatusManagerComponent idbook={book.id} status={book.status}/>
             </div>
           </div>
         ))}
