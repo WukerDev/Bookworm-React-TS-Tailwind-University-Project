@@ -3,11 +3,29 @@ import blank from "../Components/blank.png";
 import check from "../Components/check.png";
 import close from "../Components/close.png";
 import going from "../Components/going.png";
+import BooksData from "../Components/Books";
 
 interface StatusProps {
   status: string;
     idbook: number;
 }
+
+interface Book { id: number; autor: string; rating: number; tytul: string; strony: number; strona: number; status: string; img: string; reviews: number; userRating: number; }
+
+
+const handleStatusChange = (bookId: number, newStatus: string) => {
+  const existingBooks: Book[] = JSON.parse(localStorage.getItem('books') || '[]');
+
+  const mergedBooks = [...existingBooks, ...BooksData];
+  const updatedBooks = mergedBooks.map((book) => {
+    if (book.id === bookId) {
+      return { ...book, status: newStatus };
+    }
+    return book;
+  });
+
+  localStorage.setItem('books', JSON.stringify(updatedBooks));
+};
 
 const StatusManagerComponent = ({idbook, status }: StatusProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +39,8 @@ const StatusManagerComponent = ({idbook, status }: StatusProps) => {
 
   const handleButtonClick = (buttonType: string) => {
     setCurrentStatus(buttonType);
-    console.log("Button clicked:", buttonType);
+    handleStatusChange(idbook, buttonType);
+    window.location.reload();
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -40,6 +59,7 @@ const StatusManagerComponent = ({idbook, status }: StatusProps) => {
       window.removeEventListener('click', handleClickOutside);
     };
   }, []);
+
 
   return (
     <div className="relative flex justify-center align-bottom text-sm font-medium text-gray-500 dark:text-gray-400">
