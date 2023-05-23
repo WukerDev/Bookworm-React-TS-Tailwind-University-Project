@@ -65,7 +65,7 @@ const handleNewBook = () => {
  const existingBooks = JSON.parse(localStorage.getItem('books') || '[]');
  const lastId = existingBooks.length > 0 ? existingBooks[existingBooks.length - 1].id : 0;
  if(lastId == 0) 
- {newBook.id = 20;}
+ {newBook.id = 1000;}
  else 
   {newBook.id = lastId + 1;}
  const uniqueBooks = existingBooks.filter((book: Book) => book.id !== newBook.id);
@@ -211,24 +211,7 @@ const setCookie = (name: string, value: any, days: number) => {
       [e.target.name]: e.target.value,
     });
   };
-  const handleStatusChange = (bookId: number, newStatus: string) => {
-  const updatedBooks = books.map((book) => {
-    if (book.id === bookId) {
-      book.status = newStatus;
-      // Set the updated book status in local storage
-      const existingBooks: Book[] = JSON.parse(localStorage.getItem('books') || '[]');
-      const updatedExistingBooks = existingBooks.map((existingBook) => {
-        if (existingBook.id === bookId) {
-          existingBook.status = newStatus;
-        }
-        return existingBook;
-      });
-      localStorage.setItem('books', JSON.stringify(updatedExistingBooks));
-    }
-    return book;
-  });
-  setBooks(updatedBooks);
-};
+
 
 useEffect(() => {
   // Retrieve saved books from local storage
